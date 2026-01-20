@@ -1,0 +1,138 @@
+<style>
+/* Contenitore (regola la larghezza come nel tuo screenshot) */
+.scheda-wrap{
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Titolo */
+.scheda-title{
+  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Immagine grande */
+.scheda-hero{
+  margin: 0 0 16px;
+}
+.scheda-hero img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius: 3px;
+}
+
+/* Intro */
+.scheda-intro{
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Citazione stile screenshot */
+.scheda-quote{
+  display:grid !important;
+  grid-template-columns: 60px 1fr !important;
+  gap: 18px !important;
+  align-items: center !important;
+
+  max-width: 720px !important;
+  width: 100% !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-mark{
+  font-size: 56px;
+  line-height: 1;
+  color: #cfcfcf;
+  text-align: center;
+}
+
+.scheda-quote-box{
+  border-left: 2px solid #d6d6d6 !important;
+  padding-left: 18px !important;
+  width: 100% !important;
+  min-width: 0 !important; /* IMPORTANTISSIMO con grid/flex */
+}
+
+blockquote.scheda-quote{
+  border:0 !important;
+  padding:0 !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-text{
+  margin: 0 !important;
+  font-style: italic !important;
+  font-size: 12px !important;
+  line-height: 1.7 !important;
+  color: #6a6a6a !important;
+  text-align: center !important;
+
+  /* impedisce che spezza parola-per-parola */
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  max-width: none !important;
+}
+
+/* Corpo testo */
+.scheda-body{
+  font-size: 13px;
+  line-height: 1.75;
+  color: #333;
+}
+
+/* Mobile */
+@media (max-width: 700px){
+  .scheda-quote{
+    grid-template-columns: 40px 1fr;
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  .scheda-quote-mark{
+    font-size: 44px;
+  }
+}
+</style>
+
+<div class="scheda-wrap">
+
+  <h1 class="scheda-title">Inquinanti-Salute</h1>
+
+  <figure class="scheda-hero">
+    <img src="/sites/st02/files/inquinanti-salute-big.jpg" alt="inquinanti-salute">
+  </figure>
+
+  <p class="scheda-intro">
+    Una attività di frontiera svolta è quella inerente lo <strong>studio della interazione tra composti atmosferici e salute umana.</strong>
+  </p>
+
+  <blockquote class="scheda-quote" aria-label="Citazione">
+    <div class="scheda-quote-mark" aria-hidden="true">“</div>
+    <div class="scheda-quote-box">
+      <p class="scheda-quote-text">
+        Sempre più importante sta diventando l'analisi interdisciplinare dell'impatto di composti atmosferici 
+        sull'ambiente e sulla salute degli esseri viventi. Di particolare interesse è, quindi, l'effetto sulla salute 
+        umana che spazia in ampi campi clinici: dalle malattie all'apparato respiratorio fino a effetti sul 
+        sistema neurologico.
+      </p>
+    </div>
+  </blockquote>
+
+  <div class="scheda-body">
+    <p>
+     Concentrandosi sull'ozono, un gas troposferico risultante da emissioni antropiche con importanti capacità ossidative, si è studiato 
+     l'effetto di concentrazioni di ozono, pari a quelle considerate valori soglia per gli effetti sulla salute umana da direttive Europee, su 
+     cellule umane, cancerogene e non, attraverso esperimenti in vitro interdisciplinari in collaborazione con biologi dell'Università de 
+     L'Aquila. Attualmente si sta procedendo con una serie di esperimenti in vistro interpdisciplinari con genetisti dell'Università "G. 
+     d'Annunzio" per valutare l'impatto dell'ozono su cellule umane e batteri di diversa natura e con comportamenti attesi diversi.
+    </p>
+
+  </div>
+
+</div>

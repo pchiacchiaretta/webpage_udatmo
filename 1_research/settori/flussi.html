@@ -1,0 +1,143 @@
+<style>
+/* Contenitore (regola la larghezza come nel tuo screenshot) */
+.scheda-wrap{
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Titolo */
+.scheda-title{
+  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Immagine grande */
+.scheda-hero{
+  margin: 0 0 16px;
+}
+.scheda-hero img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius: 3px;
+}
+
+/* Intro */
+.scheda-intro{
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Citazione stile screenshot */
+.scheda-quote{
+  display:grid !important;
+  grid-template-columns: 60px 1fr !important;
+  gap: 18px !important;
+  align-items: center !important;
+
+  max-width: 720px !important;
+  width: 100% !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-mark{
+  font-size: 56px;
+  line-height: 1;
+  color: #cfcfcf;
+  text-align: center;
+}
+
+.scheda-quote-box{
+  border-left: 2px solid #d6d6d6 !important;
+  padding-left: 18px !important;
+  width: 100% !important;
+  min-width: 0 !important; /* IMPORTANTISSIMO con grid/flex */
+}
+
+blockquote.scheda-quote{
+  border:0 !important;
+  padding:0 !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-text{
+  margin: 0 !important;
+  font-style: italic !important;
+  font-size: 12px !important;
+  line-height: 1.7 !important;
+  color: #6a6a6a !important;
+  text-align: center !important;
+
+  /* impedisce che spezza parola-per-parola */
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  max-width: none !important;
+}
+
+/* Corpo testo */
+.scheda-body{
+  font-size: 13px;
+  line-height: 1.75;
+  color: #333;
+}
+
+/* Mobile */
+@media (max-width: 700px){
+  .scheda-quote{
+    grid-template-columns: 40px 1fr;
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  .scheda-quote-mark{
+    font-size: 44px;
+  }
+}
+</style>
+
+<div class="scheda-wrap">
+
+  <h1 class="scheda-title">Flussi</h1>
+
+  <figure class="scheda-hero">
+    <img src="/sites/st02/files/flussi-big.jpg" alt="Flussi">
+  </figure>
+
+  <p class="scheda-intro">
+    Sia presso il nostro Laboratorio che in campo, effettuiamo <strong>misure di flussi per valutare gli scambi tra terra e aria di composti 
+    chimici.</strong>
+  </p>
+
+  <blockquote class="scheda-quote" aria-label="Citazione">
+    <div class="scheda-quote-mark" aria-hidden="true">“</div>
+    <div class="scheda-quote-box">
+      <p class="scheda-quote-text">
+        Lo studio dei flussi in atmosfera rappresenta un importante settore della chimica troposferica,
+        investigando gli scambi tra atmosfera e superficie terrestre e, inoltre, tra atmosfera e superficie del 
+        mare di composti che possono essere sia di natura biogenica che non.
+      </p>
+    </div>
+  </blockquote>
+
+  <div class="scheda-body">
+    <p>
+     Attraverso la strumentazione sviluppata presso il Laboratorio di Fisica e Chimica dell'Atmosfera e Climatologia dell'Università "G. 
+     d'Annunzio" di Chieti-Pescara, ovvero il TD-LIF, è stato possibile valutare i flussi di NO2, ΣRO2NO2 ed ΣRONO2 in un ambiente, come 
+     quello della foresta pluviale del Borneo, che rappresenta un vero e proprio laboratorio vivente per lo studio dell'impatto delle attività 
+     antropiche (deforestazione in favore di piantagioni di palme da olio) sulle emissioni biogeniche in foresta.
+
+     Inoltre, recentemente è stata sviluppata una camera di flussi per misure di flussi di CO2 dal suolo per applicazioni non soltanto 
+     atmosferiche ma anche geochimiche. Infatti, una delle possibili applicazioni di questo tipo di strumentazione, tuttora in fase 
+     sperimentale, può essere quella di ricercare possibili correlazioni tra flussi di CO2 e attività sismica lungo faglie attive. Accanto a ciò,
+     una camera di flussi come quella sviluppata presso il Laboratorio di Fisica e Chimica dell'Atmosfera e Climatologia dell'Università "G. 
+     d'Annunzio" di Chieti-Pescara, consente di misurare flussi di CO2 biogenici (da vegetazione e sottosuolo).
+    </p>
+
+  </div>
+
+</div>

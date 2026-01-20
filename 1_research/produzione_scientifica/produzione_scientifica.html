@@ -1,0 +1,97 @@
+<style>
+/* wrapper */
+.aree-home-grid{
+  display:grid !important;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  column-gap: 70px;
+  row-gap: 40px;
+  align-items:start;
+  clear: both;
+  width: 100%;
+}
+
+/* linea tratteggiata */
+.aree-home-grid .area-divider{
+  grid-column:1 / -1;
+  border-top:2px dotted #3b82f6;
+  margin: 6px 0 0;
+}
+
+/* card */
+.aree-home-grid .area-title{
+  margin:0 0 10px;
+  font-size:28px;
+  font-weight:700;
+  line-height:1.1;
+}
+
+.aree-home-grid .area-link{ display:block; }
+.aree-home-grid .area-img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+.aree-home-grid .area-text{
+  margin:10px 0 0;
+  font-size:14px;
+  line-height:1.5;
+  color:#444;
+}
+
+/* mobile */
+@media (max-width: 900px){
+  .aree-home-grid{
+    grid-template-columns:1fr;
+    column-gap:0;
+    row-gap:28px;
+  }
+  .aree-home-grid .area-title{ font-size:24px; }
+}
+</style>
+
+<div class="aree-home-grid">
+
+  <div class="area-card">
+    <h2 class="area-title">Articoli</h2>
+    <a class="area-link" href="#">
+      <img class="area-img" src="/sites/st02/files/pubblicazioni-big.jpg" alt="Pubblicazioni">
+    </a>
+    <p class="area-text">
+        Articoli su riviste internazionali indicizzati su SCOPUS e/o WoS.
+    </p>
+  </div>
+
+  <div class="area-card">
+    <h2 class="area-title">Libri</h2>
+    <a class="area-link" href="#">
+      <img class="area-img" src="/sites/st02/files/libri-big.jpg" alt="Libri">
+    </a>
+    <p class="area-text">
+       Pubblicazione di libri o capitoli di libri
+    </p>
+  </div>
+
+  <div class="area-divider" aria-hidden="true"></div>
+
+  <div class="area-card">
+    <h2 class="area-title">Conferenze Internazionali</h2>
+    <a class="area-link" href="#">
+      <img class="area-img" src="/sites/st02/files/conferenze-big.jpg" alt="Conferenze">
+    </a>
+    <p class="area-text">
+      Presentazioni orali o di Poster.
+    </p>
+  </div>
+
+  <div class="area-card">
+    <h2 class="area-title">Atti di Conferenze</h2>
+    <a class="area-link" href="#">
+      <img class="area-img" src="/sites/st02/files/atti-big.jpg" alt="Atti">
+    </a>
+    <p class="area-text">
+      Lavori pubblicati su Atti di Conferenze Internazionali e Nazionali.
+    </p>
+  </div>
+
+</div>

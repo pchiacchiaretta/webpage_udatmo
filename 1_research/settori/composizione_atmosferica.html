@@ -1,0 +1,150 @@
+<style>
+/* Contenitore (regola la larghezza come nel tuo screenshot) */
+.scheda-wrap{
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Titolo */
+.scheda-title{
+  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Immagine grande */
+.scheda-hero{
+  margin: 0 0 16px;
+}
+.scheda-hero img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius: 3px;
+}
+
+/* Intro */
+.scheda-intro{
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Citazione stile screenshot */
+.scheda-quote{
+  display:grid !important;
+  grid-template-columns: 60px 1fr !important;
+  gap: 18px !important;
+  align-items: center !important;
+
+  max-width: 720px !important;
+  width: 100% !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-mark{
+  font-size: 56px;
+  line-height: 1;
+  color: #cfcfcf;
+  text-align: center;
+}
+
+.scheda-quote-box{
+  border-left: 2px solid #d6d6d6 !important;
+  padding-left: 18px !important;
+  width: 100% !important;
+  min-width: 0 !important; /* IMPORTANTISSIMO con grid/flex */
+}
+
+blockquote.scheda-quote{
+  border:0 !important;
+  padding:0 !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-text{
+  margin: 0 !important;
+  font-style: italic !important;
+  font-size: 12px !important;
+  line-height: 1.7 !important;
+  color: #6a6a6a !important;
+  text-align: center !important;
+
+  /* impedisce che spezza parola-per-parola */
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  max-width: none !important;
+}
+
+/* Corpo testo */
+.scheda-body{
+  font-size: 13px;
+  line-height: 1.75;
+  color: #333;
+}
+
+/* Mobile */
+@media (max-width: 700px){
+  .scheda-quote{
+    grid-template-columns: 40px 1fr;
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  .scheda-quote-mark{
+    font-size: 44px;
+  }
+}
+</style>
+
+<div class="scheda-wrap">
+
+  <h1 class="scheda-title">Composizione Atmosferica</h1>
+
+  <figure class="scheda-hero">
+    <img src="/sites/st02/files/composizione-big.jpg" alt="Composizione Atmosferica">
+  </figure>
+
+  <p class="scheda-intro">
+    Il nostro gruppo si occupa dello <strong>studio della composizione chimica dell’Atmosfera terrestre</strong>,
+    non soltanto attraverso le analisi di dati di significativi composti atmosferici ma anche attraverso la
+    progettazione e lo <strong>sviluppo di strumenti di misura efficienti e complessi</strong>.
+  </p>
+
+  <blockquote class="scheda-quote" aria-label="Citazione">
+    <div class="scheda-quote-mark" aria-hidden="true">“</div>
+    <div class="scheda-quote-box">
+      <p class="scheda-quote-text">
+        Lo studio della composizione chimica dell’Atmosfera e, in particolare, della Troposfera, che ne rappresenta
+        la regione a diretto contatto con la superficie terrestre, è diventato negli ultimi decenni uno fra i temi
+        di maggiore interesse scientifico non solo per la stretta correlazione tra i composti atmosferici e i
+        cambiamenti climatici, ma anche per gli effetti di questi ultimi sulla salute umana e, più in generale,
+        degli esseri viventi nel sistema Terra.
+      </p>
+    </div>
+  </blockquote>
+
+  <div class="scheda-body">
+    <p>
+      La principale attività svolta in tale settore è la progettazione e sviluppo del sistema TD-LIF…
+      Uno strumento basato sulla tecnica della fluorescenza indotta da laser (LIF) per misure dirette del biossido di azoto (NO2),
+      una specie chiave nello studio del budget dell'ozono (O3) troposferico, è stato sviluppato da tale gruppo a partire dal 2006.
+      Accoppiato ad esso c'è un sistema di termodissocazione di tre gruppi di specie serbatoio dell'NO2: i perossinitrati (ΣPNs),
+      gli alchilnitrati (ΣANs) e l'acido nitrico (HNO3). Tali specie, quindi, vengono convertite in NO2 riscaldando i campioni di aria
+      rispettivamente a 200°C, 400°C e 550°C. Le molecole di NO2 vengono eccitate per mezzo di un laser pulsato YAG a 532nm e la luce di
+      fluorescenza emessa misurata per mezzo di fotomoltiplicatori (PMT). La pressione all'interno delle celle misura è mantenuta
+      nell'ordine di qualche Torr, in modo da minimizzare l'effetto del quencing dell'NO2 e di allungare la durata del segnale di fluorescenza.
+      Il background nelle stesse celle è ridotto per mezzo sia di filtri ottici che di un filtro temporale che apre il gate dei PMT dopo
+      l'impulso del laser. Il TD-LIF ha una elevata sensitività (9.6 ppt di detection limit per l'NO2) e consente di effettuare misure ad alta
+      frequenza di campionamento (10 Hz) rendendo tale strumento particolarmente indicato per la valuzione dei flussi di NO2, ΣPNs e HNO3
+      attraverso la tecnica dell'Eddy Covariance. Complessivamente, l'analisi di tutte queste specie consente di fare una valutazione più complessa
+      e completa del budget dell'ozono troposferico e della sua produzione. Nel 2010, tale strumento è stato certificato per essere installato a bordo
+      dell'aereo strumentato inglese BAe146 (FAAM, Cranfield). Il TD-LIF è stato impiegato in numerose Campagne di misura sia a terra che aeree.
+    </p>
+
+  </div>
+
+</div>

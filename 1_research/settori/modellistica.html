@@ -1,0 +1,139 @@
+<style>
+/* Contenitore (regola la larghezza come nel tuo screenshot) */
+.scheda-wrap{
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Titolo */
+.scheda-title{
+  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Immagine grande */
+.scheda-hero{
+  margin: 0 0 16px;
+}
+.scheda-hero img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius: 3px;
+}
+
+/* Intro */
+.scheda-intro{
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Citazione stile screenshot */
+.scheda-quote{
+  display:grid !important;
+  grid-template-columns: 60px 1fr !important;
+  gap: 18px !important;
+  align-items: center !important;
+
+  max-width: 720px !important;
+  width: 100% !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-mark{
+  font-size: 56px;
+  line-height: 1;
+  color: #cfcfcf;
+  text-align: center;
+}
+
+.scheda-quote-box{
+  border-left: 2px solid #d6d6d6 !important;
+  padding-left: 18px !important;
+  width: 100% !important;
+  min-width: 0 !important; /* IMPORTANTISSIMO con grid/flex */
+}
+
+blockquote.scheda-quote{
+  border:0 !important;
+  padding:0 !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-text{
+  margin: 0 !important;
+  font-style: italic !important;
+  font-size: 12px !important;
+  line-height: 1.7 !important;
+  color: #6a6a6a !important;
+  text-align: center !important;
+
+  /* impedisce che spezza parola-per-parola */
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  max-width: none !important;
+}
+
+/* Corpo testo */
+.scheda-body{
+  font-size: 13px;
+  line-height: 1.75;
+  color: #333;
+}
+
+/* Mobile */
+@media (max-width: 700px){
+  .scheda-quote{
+    grid-template-columns: 40px 1fr;
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  .scheda-quote-mark{
+    font-size: 44px;
+  }
+}
+</style>
+
+<div class="scheda-wrap">
+
+  <h1 class="scheda-title">Modellistica</h1>
+
+  <figure class="scheda-hero">
+    <img src="/sites/st02/files/modelli-big.jpg" alt="Modellistica">
+  </figure>
+
+  <p class="scheda-intro">
+    Il nostro gruppo completa le proprie analisi osservative con l' <strong>'impiego di modelli di diversa natura.</strong>
+  </p>
+
+  <blockquote class="scheda-quote" aria-label="Citazione">
+    <div class="scheda-quote-mark" aria-hidden="true">“</div>
+    <div class="scheda-quote-box">
+      <p class="scheda-quote-text">
+        L'analisi modellistica svolge un ruolo estremamente rilevante nello studio della composizione chimica 
+        atmosferica, dell'impatto sulla salute umana e sui cambiamenti climatici, consentendo di individuare i 
+        meccanismi più significativi alla base delle osservazioni sperimentali.
+      </p>
+    </div>
+  </blockquote>
+
+  <div class="scheda-body">
+    <p>
+        Presso il Laboratorio di Fisica e Chimica dell'Atmosfera e Climatologia dell'Università "G. d'Annunzio" di Chieti-Pescara vengono 
+        impiegati diversi modelli matematici, basati su approcci e metodologie diverse tra loro e che consentono di ottenere informazioni tra 
+        loro complementari. In particolare, si fa uso di un box model estremamente dettagliato (F0AM), sviluppato dal gruppo del Prof. Glenn 
+        Wolfe (UMBC, USA) e basato sui complessi meccanismi chimici del modello MCM ideato dalla University of Leeds, per modellare la 
+        chimica in atto in uno specifico sito e comprenderne i processi dominanti. Accanto a questo, modelli basati sul machine learning, 
+        come la regressione multipla o le reti neurali, vengono impiegati per valutare la relazione tra diversi parametri (chimici e non), 
+        individuando quelli più significativi per la descrizione del fenomeno in analisi.
+    </p>
+
+  </div>
+
+</div>
