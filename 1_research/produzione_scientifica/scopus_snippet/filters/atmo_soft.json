@@ -1,0 +1,8 @@
+{
+  "mode": "include_if_any",
+  "min_concept_score": 0.25,
+  "include_concepts": ["Atmospheric science","Atmospheric chemistry","Aerosol","Air pollution","Meteorology","Climate"],
+  "include_title_keywords": ["atmospher","aerosol","flux","deposition","boundary layer","pm2.5","pm10","ozone","dust"],
+  "exclude_title_keywords": ["multi echo", "multi-echo", "multiecho"],
+  "exclude_dois": []
+}

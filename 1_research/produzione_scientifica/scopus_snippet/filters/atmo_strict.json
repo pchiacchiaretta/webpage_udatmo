@@ -1,0 +1,8 @@
+{
+  "mode": "include_if_any",
+  "min_concept_score": 0.40,
+  "include_concepts": ["Atmospheric science","Atmospheric chemistry","Aerosol","Air pollution","Troposphere","Boundary layer"],
+  "include_title_keywords": ["atmospher","aerosol","tropospher","eddy","covariance","flux","deposition"],
+  "exclude_title_keywords": ["clinical","patient","tumor","cancer","therapy"],
+  "exclude_dois": []
+}
