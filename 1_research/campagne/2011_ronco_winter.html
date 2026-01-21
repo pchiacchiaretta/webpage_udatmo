@@ -1,0 +1,172 @@
+<style>
+/* ===========================
+   campagne layout (Drupal 7)
+   =========================== */
+
+.campagne-wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Titolo */
+.campagne-title {
+  font-size: 56px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 20px 0;
+}
+
+/* HERO: immagine grande */
+.campagne-hero {
+  position: relative;
+  display: block;
+  width: 100%;
+  float: none;
+  clear: both;
+  margin: 0 0 12px 0;
+  overflow: hidden; /* evita effetti strani con float del tema */
+  border-radius: 4px;
+}
+
+/* OVERRIDE tema Drupal: impedisce il float dell'immagine */
+.campagne-hero__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  float: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Badge "campagne" in basso a sinistra */
+.campagne-hero__badge {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(0, 140, 180, 0.85);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  pointer-events: none;
+}
+
+/* Corpo testo: sempre sotto */
+.campagne-body {
+  display: block;
+  width: 100%;
+  float: none;
+  clear: both;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #444;
+}
+
+.campagne-body p {
+  margin: 0 0 16px 0;
+}
+
+/* Link */
+.campagne-body a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.campagne-body a:hover {
+  text-decoration: underline;
+}
+
+/* Extra sicurezza: se il tema mette float sulle immagini dentro la content */
+.campagne-wrap img {
+  float: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .campagne-title {
+    font-size: 38px;
+  }
+
+  .campagne-hero__badge {
+    font-size: 44px;
+    left: 12px;
+    bottom: 12px;
+  }
+
+  .campagne-body {
+    font-size: 16px;
+  }
+}
+</style>
+
+
+<div class="campagne-wrap">
+
+  <div class="campagne-hero">
+    <img
+      class="campagne-hero__img"
+      src="/sites/st02/files/2011_ronoco-winter-big.jpg"
+      alt="Foto campagna 2011 Ronco Winter"
+    />
+    <span class="campagne-hero__badge"></span>
+  </div>
+
+<div class="campagne-body">
+  <p>
+    La campagna RONOCO Winter si è tenuta presso l'aeroporto di East Midland tra il 10 e il 28 Gennaio 2011
+    come parte del progetto RONOCO.
+  </p>
+
+  <p>
+    La maggior parte dei voli sono stati organizzati nelle ore diurne e, occasionalmente, all'alba e al tramonto
+    come durante RONOCO Summer dall'aeroporto di riferimento di East Midland (UK). La campagna RONOCO Winter ha
+    avuto finalità analoghe a Ronoco Summer e SeptEx, fornendo informazioni sulla chimica troposferica notturna
+    durante l'inverno.
+  </p>
+
+  <p>
+    Maggiori informazioni <a href="https://www.faam.ac.uk/" target="_blank" rel="noopener noreferrer">qui</a>.
+  </p>
+
+  <p><strong>Pubblicazioni associate:</strong></p>
+
+  <div class="campagne-pubs">
+
+    <blockquote>
+      Morgan W.T., B. Ouyang, J. D. Allan, E. Aruffo, P. Di Carlo, O. J. Kennedy, D. Lowe, M. J. Flynn,
+      P. D. Rosenberg, P. I. Williams, R. Jones, G. B. McFiggans, and H. Coe,
+      <em>Influence of aerosol chemical composition on N2O5 uptake: airborne regional measurements in North-Western Europe</em>,
+      Atmos. Chem. Phys., 15, 973–990, doi:10.5194/acp-15-973-2015, 2015. (Impact factor 2015: 5.114)
+    </blockquote>
+
+    <blockquote>
+      Lowe D., S. Archer-Nicholls, W. Morgan, J. Allan, S. Utembe, B. Ouyang, E. Aruffo, M. Le Breton,
+      R. A. Zaveri, P. Di Carlo, C. Percival, H. Coe, R. Jones, and G. McFiggans,
+      <em>WRF-chem model predictions of the regional impacts of N2O5 heterogeneous processes on nighttime chemistry over north-western Europe</em>,
+      Atmos. Chem. Phys., 15, 1385–1409, 2015. (Impact factor 2015: 5.114)
+    </blockquote>
+
+    <blockquote>
+      Aruffo E., Di Carlo P., Dari-Salisburgo C., Biancofiore F., Giammaria F., Busilacchio M., Lee J.,
+      Moller S., Hopkins J., Punjabi S., Bauguitte S., O'Sullivan D., Parcival C., Le Breton M., Muller J.,
+      Jones R., Forster G., Reeves C., Heard D., Walker H., Ingham T., Vaughan S., Stone D.,
+      <em>Aircraft observations of the lower troposphere above a megacity: alkyl nitrate and ozone chemistry</em>,
+      Atmospheric Environment, 94, 479–488, 2014. (Impact factor 2014: 3.281)
+    </blockquote>
+
+    <blockquote>
+      Stone D., M. J. Evans, H. Walker, T. Ingham, S. Vaughan, B. Ouyang, O. J. Kennedy, M.W. McLeod,
+      R. L. Jones, J. Hopkins, S. Punjabi, R. Lidster, J. F. Hamilton, J. D. Lee, A. C. Lewis,
+      L. J. Carpenter, G. Forster, D. E. Oram, C. E. Reeves, S. Bauguitte, W. Morgan, H. Coe, E. Aruffo,
+      C. Dari-Salisburgo, F. Giammaria, P. Di Carlo, and D. E. Heard,
+      <em>Radical chemistry at night: comparisons between observed and modelled HOx, NO3 and N2O5 during the RONOCO project</em>,
+      Atmos. Chem. Phys., 14, 1299–1321, 2014. (Impact factor 2014: 5.053)
+    </blockquote>
+
+  </div>
+</div>
+
+
+

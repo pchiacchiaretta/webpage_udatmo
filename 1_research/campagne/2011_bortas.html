@@ -1,0 +1,185 @@
+<style>
+/* ===========================
+   campagne layout (Drupal 7)
+   =========================== */
+
+.campagne-wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Titolo */
+.campagne-title {
+  font-size: 56px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 20px 0;
+}
+
+/* HERO: immagine grande */
+.campagne-hero {
+  position: relative;
+  display: block;
+  width: 100%;
+  float: none;
+  clear: both;
+  margin: 0 0 12px 0;
+  overflow: hidden; /* evita effetti strani con float del tema */
+  border-radius: 4px;
+}
+
+/* OVERRIDE tema Drupal: impedisce il float dell'immagine */
+.campagne-hero__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  float: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Badge "campagne" in basso a sinistra */
+.campagne-hero__badge {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(0, 140, 180, 0.85);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  pointer-events: none;
+}
+
+/* Corpo testo: sempre sotto */
+.campagne-body {
+  display: block;
+  width: 100%;
+  float: none;
+  clear: both;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #444;
+}
+
+.campagne-body p {
+  margin: 0 0 16px 0;
+}
+
+/* Link */
+.campagne-body a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.campagne-body a:hover {
+  text-decoration: underline;
+}
+
+/* Extra sicurezza: se il tema mette float sulle immagini dentro la content */
+.campagne-wrap img {
+  float: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .campagne-title {
+    font-size: 38px;
+  }
+
+  .campagne-hero__badge {
+    font-size: 44px;
+    left: 12px;
+    bottom: 12px;
+  }
+
+  .campagne-body {
+    font-size: 16px;
+  }
+}
+</style>
+
+
+<div class="campagne-wrap">
+
+  <div class="campagne-hero">
+    <img
+      class="campagne-hero__img"
+      src="/sites/st02/files/2011_bortas-big.jpg"
+      alt="Foto campagna 2011 Bortas"
+    />
+    <span class="campagne-hero__badge"></span>
+  </div>
+
+  <div class="campagne-body">
+  <p>
+    La campagna aerea Bortas è stata organizzata dal 5 Luglio al 3 Agosto 2011 presso l'aeroporto di Halifax
+    (Nova Scotia, Canada) con PI il Prof. Paul Palmer (University of Edinburgh), facendo uso dell'aereo
+    scientifico inglese BAe146 a bordo del quale è stato installato, tra gli altri, anche lo strumento TD-LIF.
+  </p>
+
+  <p>
+    L'obiettivo principale è stato lo studio della età fotochimica e dei processi delle masse d'aria contenenti
+    i prodotti emessi dagli incendi boreali estivi e del modo in cui tali masse d'aria possono impattare sulla
+    composizione chimica a medio-lunga distanza dalla sorgente dell'emissione. Accanto alla campagna aerea, sono
+    state impiegate anche misure su piattaforme a terra e radiosondaggi in Canada e sulle Azzorre e osservazioni
+    satellitari.
+  </p>
+
+  <p>
+    Maggiori dettagli sul progetto BORTAS si possono trovare
+    <a href="https://nerc-bortas.blogspot.com/" target="_blank" rel="noopener noreferrer">qui</a> (Blog Bortas) e
+    <a href="https://geosciences.ed.ac.uk/research" target="_blank" rel="noopener noreferrer">qui</a> (University of Edinburgh).
+  </p>
+
+  <p><strong>Pubblicazioni associate:</strong></p>
+
+  <div class="campagne-pubs">
+
+    <blockquote>
+      Aruffo E., F. Biancofiore, P. Di Carlo, M. Busilacchio, M. Verdecchia, B. Tomassetti,
+      C. Dari-Salisburgo, F. Giammaria, S. Bauguitte, J. Lee, S. Moller, J. Hopkins, S. Punjabi,
+      S. Andrews, A. C. Lewis, P. I. Palmer, E. Hyer, M. Le Breton, C. Percival,
+      <em>Impact of biomass burning emission on total peroxy nitrates: fire plume identification during the
+      BORTAS campaign</em>, Atmos. Meas. Tech., 9, 1–16, 2016. (Impact factor 2016: 3.089)
+    </blockquote>
+
+
+    <blockquote>
+      Busilacchio M., P. Di Carlo, E. Aruffo, F. Biancofiore, C. Dari Salisburygo, F. Giammaria,
+      S. Bauguitte, J. Lee, S. Moller, J. Hopkins, S. Punjabi, S. Andrews, A. C. Lewis, M. Parrington,
+      P. I. Palmer, E. Hyer, G. M. Wolfe,
+      <em>Production of peroxy nitrates in boreal biomass burning plumes over Canada during the BORTAS campaign</em>,
+      Atmos. Chem. Phys., 16, 3485–3497, 2016. (Impact factor 2016: 5.318)
+    </blockquote>
+
+    <blockquote>
+      (O)lley(s) M. D., H. Coe, G. McFiggans, J. W. Taylor, S. J. O'Shea, M. Le Breton,
+      S. J.-B. Bauguitte, S. Moller, P. Di Carlo, E. Aruffo, P. I. Palmer, J. D. Lee,
+      C. J. Percival, and M. W. Gallagher,
+      <em>Properties and evolution of biomass burning organic aerosol from Canadian boreal forest fires</em>,
+      Atmos. Chem. Phys., 15, 3077–3095, 2015. (Impact factor 2015: 5.114)
+    </blockquote>
+
+    <blockquote>
+      Parrington, M., P. I. Palmer, A. C. Lewis, J. D. Lee, A. R. Rickard, P. Di Carlo,
+      J. W. Taylor, J. R. Hopkins, S. Punjabi, D. E. Oram, G. Forster, E. Aruffo, S. J. Moller,
+      S. J.-B. Bauguitte, J. D. Allan, H. Coe, and R. J. Leigh,
+      <em>Ozone photochemistry in boreal biomass burning plumes</em>,
+      Atmos. Chem. Phys., 13, 7321–7341, 2013. (Impact factor 2013: 5.298)
+    </blockquote>
+
+    <blockquote>
+      Palmer P. I., M. Parrington, J. D. Lee, A. C. Lewis, A. R. Rickard, P. F. Bernath,
+      T. J. Duck, D. L. Waugh, D. W. Tarasick, S. Andrews, E. Aruffo, L. J. Bailey,
+      E. Barrett, S. J.-B. Bauguitte, K. R. Curry, P. Di Carlo, et al.,
+      <em>Quantifying the impact of BOReal forest fires on Tropospheric oxidants over the Atlantic using Aircraft
+      and Satellites (BORTAS) experiment: design, execution and science overview</em>,
+      Atmos. Chem. Phys., 13, 6239–6261, 2013. (Impact factor 2013: 5.298)
+    </blockquote>
+
+  </div>
+</div>
+

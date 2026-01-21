@@ -1,0 +1,137 @@
+<style>
+/* ===========================
+   STANCO layout (Drupal 7)
+   =========================== */
+
+.stanco-wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Titolo */
+.stanco-title {
+  font-size: 56px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 20px 0;
+}
+
+/* HERO: immagine grande */
+.stanco-hero {
+  position: relative;
+  display: block;
+  width: 100%;
+  float: none;
+  clear: both;
+  margin: 0 0 12px 0;
+  overflow: hidden; /* evita effetti strani con float del tema */
+  border-radius: 4px;
+}
+
+/* OVERRIDE tema Drupal: impedisce il float dell'immagine */
+.stanco-hero__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  float: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Badge "Stanco" in basso a sinistra */
+.stanco-hero__badge {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(0, 140, 180, 0.85);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  pointer-events: none;
+}
+
+/* Corpo testo: sempre sotto */
+.stanco-body {
+  display: block;
+  width: 100%;
+  float: none;
+  clear: both;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #444;
+}
+
+.stanco-body p {
+  margin: 0 0 16px 0;
+}
+
+/* Link */
+.stanco-body a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.stanco-body a:hover {
+  text-decoration: underline;
+}
+
+/* Extra sicurezza: se il tema mette float sulle immagini dentro la content */
+.stanco-wrap img {
+  float: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stanco-title {
+    font-size: 38px;
+  }
+
+  .stanco-hero__badge {
+    font-size: 44px;
+    left: 12px;
+    bottom: 12px;
+  }
+
+  .stanco-body {
+    font-size: 16px;
+  }
+}
+</style>
+
+
+<div class="stanco-wrap">
+
+  <div class="stanco-hero">
+    <img
+      class="stanco-hero__img"
+      src="/sites/st02/files/2017_stanco-big.jpg"
+      alt="Foto di gruppo 2017 STANCO"
+    />
+    <span class="stanco-hero__badge"></span>
+  </div>
+
+  <div class="stanco-body">
+    <p>
+      La scuola estiva STANCO è stata organizzata dall'Università "G.d'Annunzio"
+      di Chieti-Pescara e tenuta presso le Cambridge University (UK) e Cranfield University (UK).
+    </p>
+
+    <p>
+      I direttori del corso sono stati il Prof. Piero Di Carlo (Univ. Chieti-Pescara, IT)
+      e il Prof. Jim McQuaid (Univ. Leeds, UK). Durante la scuola, i corsi sono stati tenuti
+      presso la
+      <a href="https://www.cam.ac.uk/" target="_blank" rel="noopener">Cambridge University</a>
+      con l'obiettivo di fornire una panoramica sulle tecniche di misura e l'analisi dati di composti
+      atmosferici rilevanti. Inoltre, sono stati visitati la sede del FAAM e l'aereo scientifico BAe146,
+      ospitati presso la
+      <a href="https://www.cranfield.ac.uk/" target="_blank" rel="noopener">University of Cranfield</a>.
+      Infine, sono stati organizzati ed effettuati tre voli scientifici a bordo dell'aereo scientifico BAe146
+      attorno all'area metropolitana di Londra con lo scopo di caratterizzarne la composizione chimica
+      e le proprietà fisiche.
+    </p>
+  </div>
+
+</div>

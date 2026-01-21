@@ -1,0 +1,155 @@
+<style>
+/* wrapper */
+.aree-home-grid{
+  display:grid !important;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  column-gap: 70px;
+  row-gap: 40px;
+  align-items:start;
+  clear: both;
+  width: 100%;
+}
+
+/* linea tratteggiata */
+.aree-home-grid .area-divider{
+  grid-column:1 / -1;
+  border-top:2px dotted #3b82f6;
+  margin: 6px 0 0;
+}
+
+/* card */
+.aree-home-grid .area-title{
+  margin:0 0 10px;
+  font-size:28px;
+  font-weight:700;
+  line-height:1.1;
+}
+
+.aree-home-grid .area-link{ display:block; }
+.aree-home-grid .area-img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+.aree-home-grid .area-text{
+  margin:10px 0 0;
+  font-size:14px;
+  line-height:1.5;
+  color:#444;
+}
+
+/* mobile */
+@media (max-width: 900px){
+  .aree-home-grid{
+    grid-template-columns:1fr;
+    column-gap:0;
+    row-gap:28px;
+  }
+  .aree-home-grid .area-title{ font-size:24px; }
+}
+</style>
+
+<div class="aree-home-grid">
+
+  <div class="area-card">
+    <h2 class="area-title">2017 Stanco</h2>
+    <a class="area-link" href="/ricerca/campagne/2017-stanco">
+      <img class="area-img" src="/sites/st02/files/2017_stanco-big.jpg" alt="2017_Stanco">
+    </a>
+    <p class="area-text">
+      La scuola estiva STANCO è stata organizzata dall'Università 
+      "G.d'Annunzio" di Chieti-Pescara e tenuta presso le 
+      Cambridge University (UK) e Cranfield University (UK)..
+    </p>
+  </div>
+
+  <div class="area-card">
+    <h2 class="area-title">2015 Capoverde</h2>
+    <a class="area-link" href="/ricerca/campagne/2015-capoverde">
+      <img class="area-img" src="/sites/st02/files/2015_capoverde-big.jpg" alt="2015_Capoverde">
+    </a>
+    <p class="area-text">
+      Nell'Aprile del 2015 il TD-LIF è stato utilizzato per una campagna 
+      di misure su NO2 e precursori, presso il Cape Verde 
+      Atmospheric Observatory.
+    </p>
+  </div>
+
+  <div class="area-divider" aria-hidden="true"></div>
+
+  <div class="area-card">
+    <h2 class="area-title">2014 Auchencorth Moss</h2>
+    <a class="area-link" href="/ricerca/campagne/2014-auchencorth-moss">
+      <img class="area-img" src="/sites/st02/files/2014_auchencorth-moss-big.jpg" alt="2014_Auchencorth_Moss">
+    </a>
+    <p class="area-text">
+      La campagna di Auchencorth Moss, finalizzata allo studio dei composti azotati e dei flussi associati, si è svolta tra Aprile e Giugno del 2014..
+    </p>
+  </div>
+
+  <div class="area-card">
+    <h2 class="area-title">2011 Sonata</h2>
+    <a class="area-link" href="/ricerca/campagne/2011-sonata">
+      <img class="area-img" src="/sites/st02/files/2011_sonata-big.jpg" alt="2011_Sonata">
+    </a>
+    <p class="area-text">
+      La scuola estiva SONATA si è svolta dal 17 al 28 Agosto 2011 
+      presso l'aeroporto di Pescara (Italy) nell'ambito dei corsi di 
+      formazione EUFAR FP7.
+    </p>
+  </div>
+
+  <div class="area-divider" aria-hidden="true"></div>
+
+    <div class="area-card">
+    <h2 class="area-title">2011 Bortas</h2>
+    <a class="area-link" href="/ricerca/campagne/2011-bortas">
+      <img class="area-img" src="/sites/st02/files/2011_bortas-big.jpg" alt="2011_Bortas">
+    </a>
+    <p class="area-text">
+      BORTAS è una campagna aerea svoltasi nell'estate 2011 presso 
+      l'aeroporto di Halifax (Canada), dove si sono svolte osservazioni 
+      sulle emissioni da incendi boschivi nella foresta boreale.
+    </p>
+  </div>
+
+  <div class="area-card">
+    <h2 class="area-title">2011 Ronoco Winter</h2>
+    <a class="area-link" href="/ricerca/2011-ronoco-winter">
+      <img class="area-img" src="/sites/st02/files/2011_ronoco-winter-big.jpg" alt="2011_Ronoco_winter">
+    </a>
+    <p class="area-text">
+      La campagna RONOCO Winter si è tenuta presso l'aeroporto di 
+      East Midland tra il 10 e il 28 Gennaio 2011 come parte del 
+      progetto RONOCO.
+    </p>
+  </div>
+
+  <div class="area-divider" aria-hidden="true"></div>
+
+  <div class="area-card">
+    <h2 class="area-title">2010 Septex</h2>
+    <a class="area-link" href="/ricerca/2010-septex">
+      <img class="area-img" src="/sites/st02/files/2010_septex-big.jpg" alt="2010_Septex">
+    </a>
+    <p class="area-text">
+      La campagna SeptEx è stata organizzata tra il 31 Agosto e il 9 
+      Settembre 2010 a East Midland (Regno Unito) come parte del 
+      progetto RONOCO
+    </p>
+  </div>
+
+  <div class="area-card">
+    <h2 class="area-title">2010 Ronoco Summer</h2>
+    <a class="area-link" href="/ricerca/2010-ronoco-summer">
+      <img class="area-img" src="/sites/st02/files/2010_ronoco-summer-big.jpg" alt="2010_Ronoco_summer">
+    </a>
+    <p class="area-text">
+      Il TD-LIF, installato sul velivolo BAE146 della FAAM, è stato 
+      utilizzato nel Luglio 2010 durante la campagna RONOCO, 
+      finalizzata allo studio dell'NO3 nelle ore notturne.
+    </p>
+  </div>
+
+</div>

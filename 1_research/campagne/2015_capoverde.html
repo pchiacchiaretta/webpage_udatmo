@@ -1,0 +1,131 @@
+<style>
+/* ===========================
+   campagne layout (Drupal 7)
+   =========================== */
+
+.campagne-wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Titolo */
+.campagne-title {
+  font-size: 56px;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 20px 0;
+}
+
+/* HERO: immagine grande */
+.campagne-hero {
+  position: relative;
+  display: block;
+  width: 100%;
+  float: none;
+  clear: both;
+  margin: 0 0 12px 0;
+  overflow: hidden; /* evita effetti strani con float del tema */
+  border-radius: 4px;
+}
+
+/* OVERRIDE tema Drupal: impedisce il float dell'immagine */
+.campagne-hero__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  float: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Badge "campagne" in basso a sinistra */
+.campagne-hero__badge {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(0, 140, 180, 0.85);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  pointer-events: none;
+}
+
+/* Corpo testo: sempre sotto */
+.campagne-body {
+  display: block;
+  width: 100%;
+  float: none;
+  clear: both;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #444;
+}
+
+.campagne-body p {
+  margin: 0 0 16px 0;
+}
+
+/* Link */
+.campagne-body a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.campagne-body a:hover {
+  text-decoration: underline;
+}
+
+/* Extra sicurezza: se il tema mette float sulle immagini dentro la content */
+.campagne-wrap img {
+  float: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .campagne-title {
+    font-size: 38px;
+  }
+
+  .campagne-hero__badge {
+    font-size: 44px;
+    left: 12px;
+    bottom: 12px;
+  }
+
+  .campagne-body {
+    font-size: 16px;
+  }
+}
+</style>
+
+
+<div class="campagne-wrap">
+
+  <div class="campagne-hero">
+    <img
+      class="campagne-hero__img"
+      src="/sites/st02/files/2015_capoverde-big.jpg"
+      alt="Foto campagna 2015 capoverde"
+    />
+    <span class="campagne-hero__badge"></span>
+  </div>
+
+  <div class="campagne-body">
+    <p>
+      Nell'Aprile del 2015 il TD-LIF è stato utilizzato per una campagna di misure su NO2 e precursori, presso il Cape Verde Atmospheric
+      Observatory.
+    </p>
+
+    <p>
+      Nella primavera del 2015 (Aprile 2015) lo strumento TD-LIF è stato impiegato per una campagna di misure presso l'osservatorio 
+      scientifico <a href="https://ncas.ac.uk/our-services/atmospheric-observations/atmospheric-measurement-and-observation-facility/" target="_blank" rel="noopener">Cape Verde Atmospheric Observatory (CVAO, Capoverde)</a>
+      con lo scopo di studiare l'andamento dell'NO2 e dei suoi 
+      precursori in un sito di background oceanico e l'effetto del trasporto. L'osservatorio CVAO fa parte della rete delle stazioni globali 
+      WMO-GAW.
+    </p>
+  </div>
+
+</div>
