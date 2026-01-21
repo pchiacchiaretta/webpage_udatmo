@@ -1,0 +1,161 @@
+<style>
+/* Contenitore (regola la larghezza come nel tuo screenshot) */
+.scheda-wrap{
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Titolo */
+.scheda-title{
+  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Immagine grande */
+.scheda-hero{
+  margin: 0 0 16px;
+}
+.scheda-hero img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius: 3px;
+}
+
+/* Intro */
+.scheda-intro{
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Citazione stile screenshot */
+.scheda-quote{
+  display:grid !important;
+  grid-template-columns: 60px 1fr !important;
+  gap: 18px !important;
+  align-items: center !important;
+
+  max-width: 720px !important;
+  width: 100% !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-mark{
+  font-size: 56px;
+  line-height: 1;
+  color: #cfcfcf;
+  text-align: center;
+}
+
+.scheda-quote-box{
+  border-left: 2px solid #d6d6d6 !important;
+  padding-left: 18px !important;
+  width: 100% !important;
+  min-width: 0 !important; /* IMPORTANTISSIMO con grid/flex */
+}
+
+blockquote.scheda-quote{
+  border:0 !important;
+  padding:0 !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-text{
+  margin: 0 !important;
+  font-style: italic !important;
+  font-size: 12px !important;
+  line-height: 1.7 !important;
+  color: #6a6a6a !important;
+  text-align: center !important;
+
+  /* impedisce che spezza parola-per-parola */
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  max-width: none !important;
+}
+
+/* Corpo testo */
+.scheda-body{
+  font-size: 13px;
+  line-height: 1.75;
+  color: #333;
+}
+
+/* Mobile */
+@media (max-width: 700px){
+  .scheda-quote{
+    grid-template-columns: 40px 1fr;
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  .scheda-quote-mark{
+    font-size: 44px;
+  }
+}
+</style>
+
+<div class="scheda-wrap">
+
+  <figure class="scheda-hero">
+    <img src="/sites/st02/files/chiacchiaretta_piero.jpg" alt="Piero Chiacchiaretta">
+  </figure>
+
+
+<div class="scheda-body">
+
+  <p><strong>Ricercatore Tenure Track, PHYS/05B</strong></p>
+
+  <p>
+    <a href="https://unich.unifind.cineca.it/resource/person/9452" target="_blank" rel="noopener noreferrer">Curriculum Vitae</a><br />
+  </p>
+
+<p>
+    L’attività di ricerca è documentata dalle pubblicazioni presenti nel curriculum vitae; di seguito si riportano i
+    principali ambiti di interesse e l’attività di ricerca svolta.
+  </p>
+
+  <p>
+    Durante il mio percorso di studi, ho sviluppato un forte interesse per la fisica dell'atmosfera, con un focus sulle
+    interazioni tra i parametri meteorologici e i processi ambientali e sanitari. La mia formazione in Fisica presso
+    l'Università di L'Aquila mi ha fornito solide basi nella modellizzazione e nell'analisi di fenomeni naturali.
+  </p>
+
+  <p>
+    Uno dei miei principali campi di ricerca riguarda l'analisi delle correlazioni tra fenomeni atmosferici estremi e
+    l'impatto sulla salute umana. Un esempio significativo è il mio studio sulle variazioni stagionali di livelli
+    glicemici in pazienti affetti da diabete di tipo 1, in cui abbiamo evidenziato una correlazione inversa tra
+    l'aumento delle temperature e il controllo glicemico, particolarmente accentuata durante eventi come le ondate di
+    calore. Questo lavoro sottolinea l'importanza di integrare i parametri meteorologici nella gestione clinica dei
+    pazienti, soprattutto in condizioni di cambiamento climatico.
+  </p>
+
+  <p>
+    In ambito atmosferico, ho condotto ricerche sulle concentrazioni di particolato atmosferico (PM10 e PM2.5)
+    utilizzando tecniche di machine learning per classificare le emissioni e identificarne le fonti, siano esse
+    antropogeniche o naturali, in funzione delle condizioni meteorologiche. Questi studi hanno fornito contributi
+    fondamentali alla comprensione delle dinamiche di inquinamento atmosferico nelle aree urbane e suburbane, con
+    implicazioni rilevanti per la pianificazione ambientale e sanitaria. Inoltre, ho condotto ricerche sull’efficacia
+    delle misure di prevenzione contro la diffusione di SARS-CoV-2 negli ambienti chiusi, come i trasporti pubblici,
+    attraverso l'analisi delle particelle presenti nell'aria e sulle superfici. Questi studi hanno dimostrato
+    l'efficacia delle misure adottate per ridurre la trasmissione del virus tramite aerosol e contatto.
+  </p>
+
+  <p>
+    Attualmente, sono Principal Investigator locale del progetto MBrainiS, finanziato dall'Unione Europea nell'ambito
+    di H2020 ATTRACT-EU, incentrato sullo sviluppo di tecnologie dirompenti per il monitoraggio e l'analisi, con
+    applicazioni innovative nel campo della salute. Sono anche co-fondatore di SVerE srl, uno spin-off
+    dell'Università "G. d'Annunzio", che si occupa di sviluppare piattaforme per la gestione dei dati e modelli
+    predittivi, con un focus particolare sugli impatti sanitari e ambientali.
+  </p>
+
+
+</div>
+
+
+</div>
