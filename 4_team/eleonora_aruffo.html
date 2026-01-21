@@ -1,0 +1,156 @@
+<style>
+/* Contenitore (regola la larghezza come nel tuo screenshot) */
+.scheda-wrap{
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Titolo */
+.scheda-title{
+  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Immagine grande */
+.scheda-hero{
+  margin: 0 0 16px;
+}
+.scheda-hero img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius: 3px;
+}
+
+/* Intro */
+.scheda-intro{
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Citazione stile screenshot */
+.scheda-quote{
+  display:grid !important;
+  grid-template-columns: 60px 1fr !important;
+  gap: 18px !important;
+  align-items: center !important;
+
+  max-width: 720px !important;
+  width: 100% !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-mark{
+  font-size: 56px;
+  line-height: 1;
+  color: #cfcfcf;
+  text-align: center;
+}
+
+.scheda-quote-box{
+  border-left: 2px solid #d6d6d6 !important;
+  padding-left: 18px !important;
+  width: 100% !important;
+  min-width: 0 !important; /* IMPORTANTISSIMO con grid/flex */
+}
+
+blockquote.scheda-quote{
+  border:0 !important;
+  padding:0 !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-text{
+  margin: 0 !important;
+  font-style: italic !important;
+  font-size: 12px !important;
+  line-height: 1.7 !important;
+  color: #6a6a6a !important;
+  text-align: center !important;
+
+  /* impedisce che spezza parola-per-parola */
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  max-width: none !important;
+}
+
+/* Corpo testo */
+.scheda-body{
+  font-size: 13px;
+  line-height: 1.75;
+  color: #333;
+}
+
+/* Mobile */
+@media (max-width: 700px){
+  .scheda-quote{
+    grid-template-columns: 40px 1fr;
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  .scheda-quote-mark{
+    font-size: 44px;
+  }
+}
+</style>
+
+<div class="scheda-wrap">
+
+  <figure class="scheda-hero">
+    <img src="/sites/st02/files/di-carlo-piero.jpg" alt="Piero Di Carlo">
+  </figure>
+
+
+<div class="scheda-body">
+
+  <p><strong>Professore ordinario, PHYS/05B</strong></p>
+
+  <p>
+    <a href="https://unich.unifind.cineca.it/resource/person/148089" target="_blank" rel="noopener noreferrer">Curriculum Vitae</a><br />
+  </p>
+
+  <p>
+    Il Prof. Piero Di Carlo è professore ordinario di fisica dell’atmosfera e climatologia presso l’Università
+    “G. d’Annunzio” di Chieti-Pescara, Dipartimento di Tecnologie Innovative in Medicina &amp; Odontoiatria dal
+    2021. Dal 2016 al 2021 è stato professore associato presso l'Università “G. d'Annunzio”. Dal 2008 al 2016 è
+    stato ricercatore presso l’Università dell’Aquila.
+  </p>
+
+  <p>
+    Delegato del Rettore per i Ranking di Ateneo dal dicembre 2019.
+  </p>
+
+  <p>
+    Laureato in fisica con lode presso l’Università dell’Aquila, ha conseguito il Dottorato di Ricerca in Fisica
+    dell’atmosfera presso lo stesso Ateneo svolgendo gran parte del dottorato presso la Pennsylvania State University
+    effettuando ricerche nella foresta del Michigan (USA) e nell’area urbana di Houston (Texas).
+  </p>
+
+  <p>
+    E’ responsabile del laboratorio di fisica-chimica dell’atmosfera e climatologia dell’Università “G. d’Annunzio”
+    ed è coordinatore del dottorato, sempre dello stesso Ateneo, in Science and Technology for Sustainable Development.
+    Delegato del Rettore per il Ranking di Ateneo e responsabile del GdL Clima di Ateneo per la RUS. Ha sviluppato un
+    sistema di misura di composti precursori dell’ozono unico in Europa ed installato a bordo dell’aereo strumentato
+    inglese BAE-146 con cui ha partecipato a diverse campagne di misura: foresta del Borneo, Inghilterra, Canada,
+    Scozia, Capo Verde.
+  </p>
+
+  <p>
+    I campi di ricerca riguardano lo studio dell’atmosfera terrestre, in particolare le variazioni della composizione
+    dei gas in traccia e gli effetti sul clima e la salute umana, sia dal punto di vista sperimentale che modellistico.
+    E’ stato direttore di 2 Summer School organizzate con training a bordo di aerei strumentati per ricerca. E’ stato
+    visiting professor in diversi atenei stranieri: Harvard University (USA) (2016), York University (Inghilterra) (2014),
+    Tokyo University (Giappone) (2010), Università di Chicago (USA) (2006), Pennsylvania State University (USA)
+    (2000-2001, 2003) e Finnish Meteorological Institute (1998).
+  </p>
+
+</div>
+
+
+</div>

@@ -1,0 +1,158 @@
+<style>
+/* Contenitore (regola la larghezza come nel tuo screenshot) */
+.scheda-wrap{
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Titolo */
+.scheda-title{
+  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Immagine grande */
+.scheda-hero{
+  margin: 0 0 16px;
+}
+.scheda-hero img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius: 3px;
+}
+
+/* Intro */
+.scheda-intro{
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Citazione stile screenshot */
+.scheda-quote{
+  display:grid !important;
+  grid-template-columns: 60px 1fr !important;
+  gap: 18px !important;
+  align-items: center !important;
+
+  max-width: 720px !important;
+  width: 100% !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-mark{
+  font-size: 56px;
+  line-height: 1;
+  color: #cfcfcf;
+  text-align: center;
+}
+
+.scheda-quote-box{
+  border-left: 2px solid #d6d6d6 !important;
+  padding-left: 18px !important;
+  width: 100% !important;
+  min-width: 0 !important; /* IMPORTANTISSIMO con grid/flex */
+}
+
+blockquote.scheda-quote{
+  border:0 !important;
+  padding:0 !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-text{
+  margin: 0 !important;
+  font-style: italic !important;
+  font-size: 12px !important;
+  line-height: 1.7 !important;
+  color: #6a6a6a !important;
+  text-align: center !important;
+
+  /* impedisce che spezza parola-per-parola */
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  max-width: none !important;
+}
+
+/* Corpo testo */
+.scheda-body{
+  font-size: 13px;
+  line-height: 1.75;
+  color: #333;
+}
+
+/* Spazio prima dei titoli h2 dentro la pagina campagne */
+.campagne-body h2 {
+  margin-top: 42px;   /* aumenta/diminuisci a piacere */
+  margin-bottom: 16px;
+}
+
+/* Mobile */
+@media (max-width: 700px){
+  .scheda-quote{
+    grid-template-columns: 40px 1fr;
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  .scheda-quote-mark{
+    font-size: 44px;
+  }
+}
+</style>
+
+<div class="scheda-wrap">
+
+  <figure class="scheda-hero">
+    <img src="/sites/st02/files/foto-dottorato-big.jpg" alt="Dottorarto">
+  </figure>
+
+
+  <div class="campagne-body">
+
+    <p>
+      Presso il dTIMO è attivo il Corso di dottorato in SCIENCE AND TECHNOLOGY FOR SUSTAINABLE DEVELOPMENT (STSD) di cui il
+      Prof. Di Carlo è coordinatore. Le attività del Laboratorio di Fisica-Chimica dell'Atmosfera e
+      Climatologia sono direttamente collegate all'
+      <a href="https://www.dtimo.unich.it/didattica/dottorati-di-ricerca/science-and-technology-sustainable-development" target="_blank" rel="noopener noreferrer">STSD PhD</a>
+      (PhD Course in SCIENCE AND TECHNOLOGY FOR SUSTAINABLE DEVELOPMENT), in particolare nell'area 2 -
+      <em>"Environmental pollution monitoring and analysis for environmental hazard assessment"</em>
+      di cui è responsabile il Prof. Di Carlo.
+    </p>
+
+    <h2>Environmental Pollution and Hazard</h2>
+
+    <div class="campagne-eph" style="display:block; width:100%; overflow:hidden;">
+
+      <div class="campagne-eph__text" style="display:block; width:100%; max-width:720px; float:left;">
+        <p>
+          Research and teaching activities concern the analysis of the role of anthropogenic and natural emissions on the
+          degradation of water and air quality. Multi-disciplinary analytical investigations will be carried out to assess
+          the impacts of the atmospheric, soil and water composition changes on climate, ecosystems and well-being.
+          Crustal gas emission associated with earthquake activity will also be analyzed. The exchanges processes among air,
+          soil and ocean are other key topics for a global picture of the environmental hazard. Basic disciplines are Physics
+          of the Earth and Atmosphere, Geochemistry/Petrology and Plant Ecosystems.
+        </p>
+      </div>
+
+      <div class="campagne-eph__logo" style="float:right; width:240px; max-width:35%; margin:0 0 12px 18px;">
+        <img
+          src="/sites/st02/files/logo_stsd_small.png"
+          alt="SCIENCE AND TECHNOLOGY FOR SUSTAINABLE DEVELOPMENT - Ud'A"
+          style="display:block; width:100%; height:auto; float:none;"
+        />
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+</div>

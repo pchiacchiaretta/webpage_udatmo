@@ -1,0 +1,196 @@
+<style>
+/* --- Snippet contatti/come raggiungerci (Drupal 7) --- */
+
+.lab-box {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #333;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* Titoli sezione */
+.lab-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 10px 0 25px 0;
+}
+
+/* Blocchi */
+.lab-row {
+  width: 100%;
+  overflow: hidden; /* clearfix per float */
+  margin-bottom: 30px;
+}
+
+/* Colonne (float per compatibilità Drupal 7) */
+.lab-col-left {
+  float: left;
+  width: 55%;
+}
+
+.lab-col-right {
+  float: right;
+  width: 40%;
+  text-align: right;
+}
+
+.lab-img {
+  display: inline-block;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  border-radius: 6px;
+}
+
+/* Lista tipo tabella (label + contenuto) */
+.lab-info {
+  margin-top: 10px;
+}
+
+.lab-info-row {
+  overflow: hidden;
+  margin: 0 0 14px 0;
+}
+
+.lab-label {
+  float: left;
+  width: 120px;
+  font-weight: 700;
+}
+
+.lab-value {
+  float: left;
+  width: calc(100% - 120px);
+}
+
+/* Separatore */
+.lab-sep {
+  border: none;
+  border-top: 1px solid #e5e5e5;
+  margin: 25px 0;
+}
+
+/* Come raggiungerci */
+.lab-subtitle {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 18px 0;
+}
+
+.travel-row {
+  overflow: hidden;
+  margin: 0 0 14px 0;
+}
+
+.travel-icon {
+  float: left;
+  width: 36px;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.travel-text {
+  float: left;
+  width: calc(100% - 36px);
+}
+
+.travel-text strong {
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .lab-col-left,
+  .lab-col-right {
+    float: none;
+    width: 100%;
+    text-align: left;
+  }
+
+  .lab-img {
+    max-width: 100%;
+    margin-top: 18px;
+  }
+}
+
+
+</style>
+
+<div class="lab-box">
+
+  <div class="lab-title">
+    Laboratorio di Fisica e Chimica dell'Atmosfera e Climatologia - DTIMO
+  </div>
+
+  <div class="lab-row">
+    <!-- Colonna sinistra -->
+    <div class="lab-col-left">
+      <div class="lab-info">
+
+        <div class="lab-info-row">
+          <div class="lab-label">Indirizzo:</div>
+          <div class="lab-value">
+            Via dei Vestini, 31<br />
+            Campus Universitario Unich<br />
+            Presso DTIMO<br />
+            Edificio CAST - Entrata a destra.<br />
+            66100 Chieti Scalo (CH)<br />
+            Italy
+          </div>
+        </div>
+
+        <div class="lab-info-row">
+          <div class="lab-label">Telefono:</div>
+          <div class="lab-value">+39 0871541319</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Colonna destra -->
+    <div class="lab-col-right">
+      <img
+        class="lab-img"
+        src="/sites/st02/files/atmolab_map2.png"
+        alt="Campus Universitario - posizione laboratorio"
+      />
+    </div>
+  </div>
+
+  <hr class="lab-sep" />
+
+  <div class="lab-subtitle">Come raggiungerci</div>
+
+  <div class="lab-row">
+    <div class="lab-col-left" style="width:100%; float:none;">
+
+    <div class="travel-row">
+    <div class="travel-text">
+        <strong>In Aereo</strong>, linee da Barcellona, Bergamo, Bruxelles, Bucarest, Catania, Dusseldorf,
+        Francoforte, Cracovia, Londra, Malta, Milano, Torino, Varsavia (aggiornati al 9/04/18) per
+        l'Aeroporto d'Abruzzo, situato sulla Tiburtina, a metà strada fra Chieti e Pescara.
+    </div>
+    </div>
+
+    <div class="travel-row">
+    <div class="travel-text">
+        <strong>In Treno</strong>, linee Trenitalia o Sangritana. Partenze da Pescara, Roma, Napoli, linee dirette
+        fino alla stazione di Chieti Scalo (Piazzale Marconi); con partenze da Milano, Bologna, Bari fino alla
+        stazione centrale di Pescara.
+    </div>
+    </div>
+
+    <div class="travel-row">
+    <div class="travel-text">
+        <strong>In Auto</strong>, da Milano, Bologna, Bari - Autostrada A14; uscita Pescara Ovest; da Roma -
+        Autostrada dei Parchi A25 - uscita Chieti.
+    </div>
+    </div>
+
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,122 @@
+<style>
+/* Contenitore (regola la larghezza come nel tuo screenshot) */
+.scheda-wrap{
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Titolo */
+.scheda-title{
+  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Immagine grande */
+.scheda-hero{
+  margin: 0 0 16px;
+}
+.scheda-hero img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius: 3px;
+}
+
+/* Intro */
+.scheda-intro{
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Citazione stile screenshot */
+.scheda-quote{
+  display:grid !important;
+  grid-template-columns: 60px 1fr !important;
+  gap: 18px !important;
+  align-items: center !important;
+
+  max-width: 720px !important;
+  width: 100% !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-mark{
+  font-size: 56px;
+  line-height: 1;
+  color: #cfcfcf;
+  text-align: center;
+}
+
+.scheda-quote-box{
+  border-left: 2px solid #d6d6d6 !important;
+  padding-left: 18px !important;
+  width: 100% !important;
+  min-width: 0 !important; /* IMPORTANTISSIMO con grid/flex */
+}
+
+blockquote.scheda-quote{
+  border:0 !important;
+  padding:0 !important;
+  margin: 24px auto 26px !important;
+}
+
+.scheda-quote-text{
+  margin: 0 !important;
+  font-style: italic !important;
+  font-size: 12px !important;
+  line-height: 1.7 !important;
+  color: #6a6a6a !important;
+  text-align: center !important;
+
+  /* impedisce che spezza parola-per-parola */
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  max-width: none !important;
+}
+
+/* Corpo testo */
+.scheda-body{
+  font-size: 13px;
+  line-height: 1.75;
+  color: #333;
+}
+
+/* Mobile */
+@media (max-width: 700px){
+  .scheda-quote{
+    grid-template-columns: 40px 1fr;
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  .scheda-quote-mark{
+    font-size: 44px;
+  }
+}
+</style>
+
+<div class="scheda-wrap">
+
+  <figure class="scheda-hero">
+    <img src="/sites/st02/files/foto-postdoc-big.jpg" alt="Post_Doc">
+  </figure>
+
+
+    <div class="campagne-body">
+        <p>
+          Possibilità di borse ed assegni di ricerca legati a progetti o particolari attività di ricerca sono periodicamente disponibili, per 
+          informazioni o autocandidature contattare il Prof. Piero Di Carlo.
+        </p>
+
+        <p>
+            Se sei interessato/a <a href="#" target="_blank" rel="noopener noreferrer">Contattaci</a>.
+        </p>
+    </div>
+
+
+</div>
