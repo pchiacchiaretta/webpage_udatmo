@@ -1,0 +1,5 @@
+name,site,lat,lon,tempout_c,humout,bar_hpa,wind_kmh,winddir_txt,gust_kmh,rain_day_mm,updated_age_sec
+SGT,San Giovanni Teatino,42.4094444,14.1733333,10.388889,82,997.494646,6.437376,NNE,16.09344,0.0,0
+UdA,Chieti,42.3688889,14.1483333,,,,,,,,0
+123917687783758,SGT,San Giovanni Teatino,42.4094444,14.1733333,1769085215,0,10.388889,82,997.494646,6.437376,20,16.09344,0.0,55.118,55.118,20,NNE,0.0
+123917687783754,UdA,Chieti,42.3688889,14.1483333,1769085215,0,,,,,,,,,,,,
