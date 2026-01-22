@@ -1,0 +1,550 @@
+<style>
+  .wx-wrap{ font:14px/1.35 Arial, sans-serif; color:#222; }
+  .wx-title{ font-size:42px; font-weight:800; margin:0 0 10px; letter-spacing:-.5px; }
+  .wx-meta{ font-size:18px; color:#444; margin:0 0 6px; }
+  .wx-meta b{ font-weight:800; }
+
+  .wx-grid{ display:grid; grid-template-columns: 1fr; gap:18px; margin-top:16px; }
+
+  .wx-card{ background:#f3f3f3; border:1px solid #e0e0e0; border-radius:4px; overflow:hidden; }
+  .wx-card-h{ background:#e9e9e9; padding:10px 12px; font-weight:800; font-size:18px; border-bottom:1px solid #d9d9d9; }
+  .wx-card-b{ padding:12px; background:#fff; }
+
+  .wx-table{ width:100%; border-collapse:collapse; }
+  .wx-table th, .wx-table td{ padding:10px 10px; border-bottom:1px solid #eee; text-align:left; vertical-align:top; }
+  .wx-table th{ background:#fafafa; font-weight:800; }
+  .wx-muted{ color:#888; }
+
+  .wx-cols{ display:grid; grid-template-columns: 1fr; gap:18px; }
+  @media (min-width: 980px){ .wx-cols{ grid-template-columns: 1fr 1fr; } }
+
+  .wx-chart{ width:100%; height:340px; }
+
+  /* wind rose container */
+  #wx-rose-hc{ width:100%; height:520px; }
+
+  .wx-loading{
+    padding:12px; background:#fffbe6; border:1px solid #ffe58f;
+    border-radius:8px; display:inline-block;
+  }
+</style>
+
+<div class="wx-wrap">
+  <h1 class="wx-title" id="wx-title">Stazione</h1>
+  <p class="wx-meta"><b>Coordinate:</b> <span id="wx-coords" class="wx-muted">--</span></p>
+  <p class="wx-meta"><b>Ultimo aggiornamento dati:</b> <span id="wx-updated" class="wx-muted">--</span></p>
+
+  <div id="wx-status" class="wx-loading">Caricamento dati…</div>
+
+  <div class="wx-grid" id="wx-content" style="display:none;">
+
+    <div class="wx-card">
+      <div class="wx-card-h">Termometria / Anemometria / Pluviometria (attuale + min/max 3 gg)</div>
+      <div class="wx-card-b">
+        <table class="wx-table" id="wx-now-table">
+          <thead>
+            <tr>
+              <th>Parametro</th>
+              <th>Attuale</th>
+              <th>Min (3 gg)</th>
+              <th>Ora</th>
+              <th>Max (3 gg)</th>
+              <th>Ora</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="wx-cols">
+      <div class="wx-card">
+        <div class="wx-card-h">Temperatura ultimi 3 gg</div>
+        <div class="wx-card-b"><canvas id="wx-chart-temp" class="wx-chart"></canvas></div>
+      </div>
+      <div class="wx-card">
+        <div class="wx-card-h">Umidità relativa ultimi 3 gg</div>
+        <div class="wx-card-b"><canvas id="wx-chart-hum" class="wx-chart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="wx-cols">
+      <div class="wx-card">
+        <div class="wx-card-h">Pressione ultimi 3 gg</div>
+        <div class="wx-card-b"><canvas id="wx-chart-pres" class="wx-chart"></canvas></div>
+      </div>
+      <div class="wx-card">
+        <div class="wx-card-h">Velocità vento ultimi 3 gg</div>
+        <div class="wx-card-b"><canvas id="wx-chart-wind" class="wx-chart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="wx-card">
+      <div class="wx-card-h">Rosa dei venti (ultime 24 ore) – per classi di velocità</div>
+      <div class="wx-card-b">
+        <div class="wx-muted" style="margin-bottom:8px;">
+          Barre polari impilate per settore (16 direzioni) e classe di velocità.
+        </div>
+        <div id="wx-rose-hc"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Chart.js (line charts blu) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/luxon@3.5.0/build/global/luxon.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1/dist/chartjs-adapter-luxon.umd.min.js"></script>
+
+<script>
+(function(){
+
+  // =======================
+  // URL FILE (MODIFICA SE SERVE)
+  // =======================
+  var URL_LATEST    = "/sites/st02/files/latest.txt";
+  var URL_SERIES_3D = "/sites/st02/files/series_3d.txt";
+  var URL_WIND_24H  = "/sites/st02/files/wind_24h.txt";
+
+  // tolleranza accoppiamento direzione-velocità
+  var MATCH_TOLERANCE_MS = 10 * 60 * 1000; // 10 minuti
+
+  // =======================
+  // Helpers
+  // =======================
+  function qs(name){
+    var m = new RegExp("[?&]" + name + "=([^&]+)").exec(location.search);
+    return m ? decodeURIComponent(m[1].replace(/\+/g," ")) : null;
+  }
+  function stationFromUrl(){
+    var st = qs("st");
+    if (st) return st;
+    var path = location.pathname.replace(/\/+$/,"");
+    var last = path.split("/").pop() || "";
+    if (last && last.length <= 12) return last;
+    return "SGT";
+  }
+  var ST = stationFromUrl();
+
+  function toNum(v){
+    if (v === null || v === undefined) return null;
+    var s = String(v).trim();
+    if (!s) return null;
+    var n = Number(s);
+    if (!Number.isFinite(n)) return null;
+    if (Math.abs(n) >= 9999) return null; // sentinel
+    return n;
+  }
+
+  function parseTs(ts){
+    if (!ts) return null;
+    var s = String(ts).trim();
+    if (/^\d{10}$/.test(s)) return Number(s) * 1000;  // sec
+    if (/^\d{13}$/.test(s)) return Number(s);         // ms
+    if (/^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(s)) s = s.replace(" ", "T");
+    var d = new Date(s);
+    if (!isNaN(d.getTime())) return d.getTime();
+    return null;
+  }
+
+  function fmtTimeMs(ms){
+    if (!ms) return '<span class="wx-muted">--</span>';
+    var d = new Date(ms);
+    if (isNaN(d.getTime())) return '<span class="wx-muted">--</span>';
+    var hh = String(d.getHours()).padStart(2,"0");
+    var mm = String(d.getMinutes()).padStart(2,"0");
+    var dd = String(d.getDate()).padStart(2,"0");
+    var mo = String(d.getMonth()+1).padStart(2,"0");
+    var yy = d.getFullYear();
+    return "ore " + hh + ":" + mm + " del " + dd + "/" + mo + "/" + yy;
+  }
+
+  function parseCSV(text){
+    var lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+    if (!lines.length) return {header:[], rows:[]};
+    var header = lines[0].split(",").map(s=>s.trim());
+    var rows = [];
+    for (var i=1;i<lines.length;i++){
+      var cols = lines[i].split(",");
+      var obj = {};
+      for (var c=0;c<header.length;c++){
+        obj[header[c]] = (cols[c]!==undefined ? cols[c] : "");
+      }
+      rows.push(obj);
+    }
+    return {header:header, rows:rows};
+  }
+
+  // lungo: id,name,site,lat,lon,metric,ts,val
+  // corto: lat,lon,metric,ts,val
+  function parseSeriesLike(text){
+    var lines = text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+    var out = [];
+    lines.forEach(function(line){
+      var cols = line.split(",");
+      if (cols.length < 5) return;
+      var isLong = cols.length >= 8 && /^\d{6,}$/.test(cols[0]);
+      if (isLong){
+        out.push({
+          name: cols[1],
+          site: cols[2],
+          lat: toNum(cols[3]),
+          lon: toNum(cols[4]),
+          metric: cols[5],
+          ts: cols[6],
+          val: toNum(cols[7])
+        });
+      } else {
+        out.push({
+          name: null,
+          site: null,
+          lat: toNum(cols[0]),
+          lon: toNum(cols[1]),
+          metric: cols[2],
+          ts: cols[3],
+          val: toNum(cols[4])
+        });
+      }
+    });
+    return out;
+  }
+
+  function minMax(arr){
+    if (!arr.length) return {min:null, minT:null, max:null, maxT:null};
+    var min = arr[0], max = arr[0];
+    arr.forEach(p=>{
+      if (p.v < min.v) min = p;
+      if (p.v > max.v) max = p;
+    });
+    return {min:min.v, minT:min.t, max:max.v, maxT:max.t};
+  }
+
+  // =======================
+  // LINE CHART BLU (no upper/lower)
+  // =======================
+  function mkBlueLineChart(canvasId, series, yLabel, opts){
+    var ctx = document.getElementById(canvasId);
+    if (!ctx) return;
+
+    var pts = series
+      .map(p => ({x: parseTs(p.t), y: p.v}))
+      .filter(p => p.x !== null && p.y !== null)
+      .sort((a,b)=>a.x-b.x);
+
+    if (!pts.length){
+      ctx.parentNode.innerHTML = "<div class='wx-muted'>Nessun dato disponibile.</div>";
+      return;
+    }
+
+    var yMin = opts && typeof opts.yMin === "number" ? opts.yMin : undefined;
+    var yMax = opts && typeof opts.yMax === "number" ? opts.yMax : undefined;
+
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        datasets: [{
+          label: yLabel,
+          data: pts,
+          parsing: false,
+          pointRadius: 0,
+          borderWidth: 2,
+          tension: 0.25,
+          borderColor: "#1f77b4"  // BLU
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
+        scales: {
+          x: {
+            type: "time",
+            time: { tooltipFormat: "dd/MM HH:mm" },
+            grid: { color: "rgba(0,0,0,0.06)" },
+            ticks: { maxRotation: 0 }
+          },
+          y: {
+            title: { display: true, text: yLabel },
+            grid: { color: "rgba(0,0,0,0.06)" },
+            min: yMin,
+            max: yMax
+          }
+        },
+        plugins: { legend: { display: true, position: "top" } }
+      }
+    });
+  }
+
+  // =======================
+  // Wind rose stacked (Highcharts) – stile immagine
+  // =======================
+  function degToSectorIndex(deg){
+    var d = ((deg % 360) + 360) % 360;
+    return Math.floor((d + 11.25) / 22.5) % 16;
+  }
+
+  function loadScriptOnce(url){
+    return new Promise(function(resolve, reject){
+      var existing = document.querySelector('script[data-src="'+url+'"]');
+      if (existing) return resolve();
+      var s = document.createElement("script");
+      s.src = url;
+      s.setAttribute("data-src", url);
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  function renderWindRoseHighcharts(containerId, pairs, unitLabel){
+  var dirs = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+
+  // classi (km/h) – puoi modificarle
+  var bins = [
+    {name:"< 2",   min:0,  max:2},
+    {name:"2–4",   min:2,  max:4},
+    {name:"4–6",   min:4,  max:6},
+    {name:"6–8",   min:6,  max:8},
+    {name:"8–10",  min:8,  max:10},
+    {name:"> 10",  min:10, max:1e9},
+  ];
+
+  function degToSectorIndex(deg){
+    var d = ((deg % 360) + 360) % 360;
+    return Math.floor((d + 11.25) / 22.5) % 16;
+  }
+
+  // conteggi [bin][sector]
+  var counts = bins.map(() => Array(16).fill(0));
+  pairs.forEach(function(p){
+    if (p.dirDeg == null || p.speed == null) return;
+    var sIdx = degToSectorIndex(p.dirDeg);
+    var bIdx = -1;
+    for (var i=0;i<bins.length;i++){
+      if (p.speed >= bins[i].min && p.speed < bins[i].max){ bIdx=i; break; }
+    }
+    if (bIdx >= 0) counts[bIdx][sIdx] += 1;
+  });
+
+  var total = pairs.length || 1;
+
+  // serie: percentuale sul totale, per settore
+  var series = bins.map(function(b, i){
+    return {
+      name: b.name + " " + unitLabel,
+      data: counts[i].map(v => (v * 100 / total)),
+      pointPlacement: 'on'
+    };
+  });
+
+  Highcharts.chart(containerId, {
+    chart: {
+      polar: true,
+      type: 'column',
+      backgroundColor: 'transparent'
+    },
+    title: { text: null },
+    pane: { size: '85%' },
+
+    xAxis: {
+      categories: dirs,
+      tickmarkPlacement: 'on',
+      lineWidth: 0,
+      gridLineWidth: 1
+    },
+
+    yAxis: {
+      min: 0,
+      endOnTick: false,
+      showLastLabel: true,
+      gridLineInterpolation: 'polygon',   // ✅ IMPORTANTISSIMO: griglia “a ragnatela”
+      title: { text: 'Frequenza (%)' },
+      labels: { formatter: function(){ return this.value + '%'; } }
+    },
+
+    tooltip: {
+      valueDecimals: 1,
+      valueSuffix: '%'
+    },
+
+    plotOptions: {
+      series: {
+        stacking: 'normal',
+        groupPadding: 0,
+        pointPadding: 0,
+        borderWidth: 0
+      },
+      column: {
+        pointPlacement: 'on'
+      }
+    },
+
+    legend: {
+      align: 'right',
+      verticalAlign: 'middle',
+      layout: 'vertical'
+    },
+
+    series: series,
+
+    credits: { enabled: false }
+  });
+}
+
+
+  // =======================
+  // UI refs
+  // =======================
+  var elTitle   = document.getElementById("wx-title");
+  var elCoords  = document.getElementById("wx-coords");
+  var elUpdated = document.getElementById("wx-updated");
+  var elStatus  = document.getElementById("wx-status");
+  var elContent = document.getElementById("wx-content");
+  var elTbody   = document.querySelector("#wx-now-table tbody");
+
+  // =======================
+  // Load all
+  // =======================
+  Promise.all([
+    fetch(URL_LATEST,    {cache:"no-store"}).then(r=>r.text()),
+    fetch(URL_SERIES_3D, {cache:"no-store"}).then(r=>r.text()),
+    fetch(URL_WIND_24H,  {cache:"no-store"}).then(r=>r.text())
+  ])
+  .then(function(all){
+    var latest = parseCSV(all[0]);
+    var seriesAll = parseSeriesLike(all[1]);
+    var windAll = parseSeriesLike(all[2]);
+
+    var row = latest.rows.find(r => String(r.name||"").toLowerCase() === String(ST).toLowerCase());
+    if (!row) throw new Error("Stazione non trovata in latest.txt: " + ST);
+
+    var stationName = row.site || row.name || ST;
+    var lat = toNum(row.lat), lon = toNum(row.lon);
+
+    elTitle.textContent = stationName;
+    elCoords.innerHTML = (lat!=null && lon!=null)
+      ? ("Lat " + lat.toFixed(6) + " - Lon " + lon.toFixed(6))
+      : '<span class="wx-muted">--</span>';
+
+    var genMs = parseTs(row.generated_at);
+    elUpdated.innerHTML = genMs ? fmtTimeMs(genMs) : (row.generated_at || '<span class="wx-muted">--</span>');
+
+    // filtra serie stazione
+    var seriesST = seriesAll.filter(x => x.name && String(x.name).toLowerCase() === String(ST).toLowerCase());
+    if (!seriesST.length && lat!=null && lon!=null){
+      seriesST = seriesAll.filter(x => x.lat!=null && x.lon!=null && Math.abs(x.lat-lat)<1e-6 && Math.abs(x.lon-lon)<1e-6);
+    }
+
+    function seriesMetric(metric){
+      return seriesST
+        .filter(x => x.metric === metric && x.val!=null && x.ts)
+        .map(x => ({t:x.ts, v:x.val}));
+    }
+
+    var sTemp = seriesMetric("tempout_c");
+    var sHum  = seriesMetric("humout");
+    var sPres = seriesMetric("bar_hpa");
+    var sWind = seriesMetric("wind_kmh");
+    var sGust = seriesMetric("gust_kmh");
+    var sRain = seriesMetric("rain_day_mm");
+
+    // tabella
+    function addRow(label, nowText, mm, unit, digits){
+      var tr = document.createElement("tr");
+      tr.innerHTML =
+        "<td>"+label+"</td>" +
+        "<td><b>"+ (nowText || "<span class='wx-muted'>--</span>") +"</b></td>" +
+        "<td>"+ (mm.min==null?'<span class="wx-muted">--</span>': (mm.min.toFixed(digits)+" "+unit)) +"</td>" +
+        "<td>"+ (mm.minT? fmtTimeMs(parseTs(mm.minT)) : '<span class="wx-muted">--</span>') +"</td>" +
+        "<td>"+ (mm.max==null?'<span class="wx-muted">--</span>': (mm.max.toFixed(digits)+" "+unit)) +"</td>" +
+        "<td>"+ (mm.maxT? fmtTimeMs(parseTs(mm.maxT)) : '<span class="wx-muted">--</span>') +"</td>";
+      elTbody.appendChild(tr);
+    }
+
+    var nowTemp = toNum(row.tempout_c);
+    var nowHum  = toNum(row.humout);
+    var nowPres = toNum(row.bar_hpa);
+    var nowWind = toNum(row.wind_kmh);
+    var nowGust = toNum(row.gust_kmh);
+    var nowRain = toNum(row.rain_day_mm);
+    var nowDir  = (row.winddir_txt||"").trim();
+
+    addRow("Temperatura dell'Aria", (nowTemp==null?null:(nowTemp.toFixed(1)+" °C")), minMax(sTemp), "°C", 1);
+    addRow("Umidità Relativa",      (nowHum==null?null:(Math.round(nowHum)+" %")),    minMax(sHum),  "%",  0);
+    addRow("Pressione Atmosferica", (nowPres==null?null:(nowPres.toFixed(1)+" hPa")), minMax(sPres),"hPa",1);
+    addRow("Velocità del vento",    (nowWind==null?null:(nowWind.toFixed(1)+" km/h")),minMax(sWind),"km/h",1);
+    addRow("Raffica vento",         (nowGust==null?null:(nowGust.toFixed(1)+" km/h")),minMax(sGust),"km/h",1);
+    addRow("Pioggia del giorno",    (nowRain==null?null:(nowRain.toFixed(1)+" mm")),  minMax(sRain),"mm",  1);
+
+    var trNote = document.createElement("tr");
+    trNote.innerHTML =
+      "<td><span class='wx-muted'>Direzione vento (attuale)</span></td>" +
+      "<td colspan='5'><b>"+ (nowDir || "--") +"</b></td>";
+    elTbody.appendChild(trNote);
+
+    // grafici blu
+    mkBlueLineChart("wx-chart-temp", sTemp, "°C");
+    mkBlueLineChart("wx-chart-pres", sPres, "hPa");
+    mkBlueLineChart("wx-chart-wind", sWind, "km/h");
+
+    // UR: forza asse 0–100
+    mkBlueLineChart("wx-chart-hum", sHum, "%", {yMin:0, yMax:100});
+
+    // ===== Wind rose: accoppia direzione (wind_24h) + velocità (wind_kmh)
+    var windDirST = windAll.filter(x => x.name && String(x.name).toLowerCase() === String(ST).toLowerCase() && x.metric === "winddir" && x.val!=null);
+    if (!windDirST.length && lat!=null && lon!=null){
+      windDirST = windAll.filter(x => x.metric==="winddir" && x.val!=null && x.lat!=null && x.lon!=null && Math.abs(x.lat-lat)<1e-6 && Math.abs(x.lon-lon)<1e-6);
+    }
+
+    var windSpdPts = sWind
+      .map(p => ({t: parseTs(p.t), v: p.v}))
+      .filter(p => p.t!==null && p.v!==null)
+      .sort((a,b)=>a.t-b.t);
+
+    function findNearestSpeed(tMs){
+      var best = null, bestDt = Infinity;
+      for (var i=0;i<windSpdPts.length;i++){
+        var dt = Math.abs(windSpdPts[i].t - tMs);
+        if (dt < bestDt){
+          bestDt = dt;
+          best = windSpdPts[i];
+        }
+      }
+      if (best && bestDt <= MATCH_TOLERANCE_MS) return best.v;
+      return null;
+    }
+
+    var pairs = windDirST
+      .map(function(x){
+        var t = parseTs(x.ts);
+        if (t===null) return null;
+        var spd = findNearestSpeed(t);
+        if (spd==null) return null;
+        return { dirDeg: x.val, speed: spd };
+      })
+      .filter(Boolean);
+
+    // carica Highcharts e renderizza (stile immagine)
+    return Promise.all([
+      loadScriptOnce("https://code.highcharts.com/highcharts.js"),
+      loadScriptOnce("https://code.highcharts.com/highcharts-more.js")
+    ]).then(function(){
+      if (!pairs.length){
+        document.getElementById("wx-rose-hc").innerHTML =
+          "<div class='wx-muted'>Nessun dato sufficiente per la rosa dei venti (servono direzione+velocità accoppiate).</div>";
+        return;
+      }
+      renderWindRoseHighcharts("wx-rose-hc", pairs, "km/h");
+    }).then(function(){
+      elStatus.style.display = "none";
+      elContent.style.display = "grid";
+    });
+  })
+  .catch(function(err){
+    console.error(err);
+    elStatus.textContent = "Errore: " + (err && err.message ? err.message : err);
+  });
+
+})();
+</script>
