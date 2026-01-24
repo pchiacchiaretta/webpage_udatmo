@@ -1,0 +1,211 @@
+<div id="wxWrap" style="max-width:820px;margin:10px auto;font-family:Arial,sans-serif;">
+
+  <div style="font-size:12px;color:#333;margin-bottom:6px;line-height:1.35;">
+    Elaborazioni da modello globale GFS a risoluzione 25 km su dominio Europa-Italia e da modello locale ICON-EU a risoluzione 6,5 km su dominio Italia-Abruzzo.
+  </div>
+
+  <div style="background:#dff0ff;border:1px solid #b8ddff;color:#0b3b64;
+              padding:8px 10px;border-radius:3px;font-size:12px;margin-bottom:10px;">
+    Seleziona la mappa scegliendo <b>MODELLO</b> → <b>DOMINIO</b> → <b>RUN</b> → <b>PARAMETRO</b>.
+    Poi passa sugli orari di previsione sopra o a destra della mappa.
+  </div>
+
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px;">
+    <select id="modelSel" style="height:28px;border:1px solid #cfcfcf;border-radius:3px;padding:0 8px;background:#fff;">
+      <option value="icon-eu">ICON-EU</option>
+      <option value="gfs">GFS</option>
+    </select>
+
+    <select id="domSel" style="height:28px;border:1px solid #cfcfcf;border-radius:3px;padding:0 8px;background:#fff;">
+      <option value="it">Italia</option>
+      <option value="ab">Abruzzo</option>
+    </select>
+
+    <select id="runSel" style="height:28px;border:1px solid #cfcfcf;border-radius:3px;padding:0 8px;background:#fff;">
+      <option value="00">00</option>
+      <option value="06">06</option>
+      <option value="12">12</option>
+      <option value="18">18</option>
+    </select>
+
+    <select id="varSel" style="height:28px;border:1px solid #cfcfcf;border-radius:3px;padding:0 8px;background:#fff;min-width:240px;">
+      <option value="precip">Precipitazioni cumulate totali</option>
+      <option value="t2m">Temperatura 2m</option>
+      <option value="wind">Vento 10m</option>
+    </select>
+  </div>
+
+  <!-- Breve termine: 0..72 -->
+  <div style="display:flex;gap:10px;align-items:flex-start;margin:6px 0 10px;">
+    <div style="font-size:11px;color:#333;min-width:92px;"><i>Breve Termine</i></div>
+    <div id="stepGrid" style="display:flex;flex-wrap:wrap;gap:4px;align-items:center;"></div>
+  </div>
+
+  <div style="display:flex;gap:10px;align-items:stretch;">
+    <!-- MAPPA -->
+    <div style="flex:1;border:1px solid #ddd;background:#fff;position:relative;min-height:420px;">
+      <img alt="mappa" id="mapImg"
+           src=""
+           style="width:100%;display:block;min-height:420px;object-fit:contain;background:#fff;" />
+
+      <button id="prevBtn" type="button"
+              style="position:absolute;left:10px;top:50%;transform:translateY(-50%);
+                     width:54px;height:54px;border-radius:6px;border:1px solid #bfbfbf;
+                     background:rgba(255,255,255,0.85);cursor:pointer;font-size:26px;line-height:52px;">
+        ‹
+      </button>
+
+      <button id="nextBtn" type="button"
+              style="position:absolute;right:10px;top:50%;transform:translateY(-50%);
+                     width:54px;height:54px;border-radius:6px;border:1px solid #bfbfbf;
+                     background:rgba(255,255,255,0.85);cursor:pointer;font-size:26px;line-height:52px;">
+        ›
+      </button>
+
+      <div style="position:absolute;right:10px;top:10px;
+                  background:rgba(255,255,255,0.9);border:1px solid #ddd;
+                  border-radius:3px;padding:4px 8px;font-size:12px;">
+        Step: <b><span id="stepLbl">0</span></b>
+        <button id="playBtn" type="button"
+                style="margin-left:8px;height:22px;padding:0 8px;border:1px solid #cfcfcf;
+                       border-radius:3px;background:#fff;cursor:pointer;font-size:12px;">
+          ▶
+        </button>
+      </div>
+    </div>
+
+    <!-- Medio-lungo termine: lista a destra -->
+    <div style="width:74px;border:1px solid #ddd;background:#fff;overflow:auto;">
+      <div style="font-size:11px;color:#333;text-align:center;padding:6px 0;border-bottom:1px solid #eee;">
+        <i>Medio-Lungo</i><br><i>Termine</i>
+      </div>
+      <div id="stepCol" style="display:flex;flex-direction:column;gap:2px;padding:6px;"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const img      = document.getElementById('mapImg');
+  const modelSel = document.getElementById('modelSel');
+  const varSel   = document.getElementById('varSel');
+  const domSel   = document.getElementById('domSel');
+  const runSel   = document.getElementById('runSel');
+
+  const stepLbl  = document.getElementById('stepLbl');
+  const prevBtn  = document.getElementById('prevBtn');
+  const nextBtn  = document.getElementById('nextBtn');
+  const playBtn  = document.getElementById('playBtn');
+
+  const stepGrid = document.getElementById('stepGrid');
+  const stepCol  = document.getElementById('stepCol');
+
+  // === RANGE ESATTI COME DA SCREENSHOT ===
+  const shortSteps = Array.from({length: 73}, (_,i)=>i); // 0..72
+  const longSteps  = [
+    73,74,75,76,77,78,
+    81,84,87,90,93,96,99,102,105,108,111,114,117,120
+  ];
+  const allSteps = shortSteps.concat(longSteps);
+
+  let step = 0;
+  let timer = null;
+
+  // Se ti serve padding nel filename (es. 007), usa pad3() in makeUrl
+  function pad3(n){ return (n<10?'00':(n<100?'0':'')) + n; }
+
+  // >>> QUI metti il tuo schema URL finale
+  function makeUrl(){
+    const m = modelSel.value;
+    const v = varSel.value;
+    const d = domSel.value;
+    const r = runSel.value;
+    // ESEMPIO:
+    // return "/latest/" + m + "/" + d + "/" + r + "/" + v + "_" + pad3(step) + ".png";
+    return "/latest/" + v + "_" + d + "_" + pad3(step) + "h.png";
+  }
+
+  function setActive(){
+    stepLbl.textContent = String(step);
+
+    stepGrid.querySelectorAll('button[data-step]').forEach(b=>{
+      const isActive = parseInt(b.dataset.step,10) === step;
+      b.style.background   = isActive ? '#e6f2ff' : '#fff';
+      b.style.borderColor  = isActive ? '#77b6ff' : '#cfcfcf';
+      b.style.fontWeight   = isActive ? '700' : '400';
+    });
+
+    stepCol.querySelectorAll('a[data-step]').forEach(a=>{
+      const isActive = parseInt(a.dataset.step,10) === step;
+      a.style.background  = isActive ? '#e6f2ff' : '#fff';
+      a.style.borderColor = isActive ? '#77b6ff' : '#e5e5e5';
+      a.style.fontWeight  = isActive ? '700' : '400';
+    });
+  }
+
+  function update(){
+    img.src = makeUrl() + "?t=" + Date.now();
+    setActive();
+  }
+
+  function stepByIndex(delta){
+    const idx = allSteps.indexOf(step);
+    const nextIdx = (idx + delta + allSteps.length) % allSteps.length;
+    step = allSteps[nextIdx];
+    update();
+  }
+
+  function togglePlay(){
+    if(timer){
+      clearInterval(timer);
+      timer = null;
+      playBtn.textContent = "▶";
+    } else {
+      timer = setInterval(()=>stepByIndex(1), 900);
+      playBtn.textContent = "⏸";
+    }
+  }
+
+  function buildUI(){
+    // top grid: 0..72 (come screenshot)
+    stepGrid.innerHTML = "";
+    shortSteps.forEach(s=>{
+      const b = document.createElement('button');
+      b.type = "button";
+      b.dataset.step = String(s);
+      b.textContent = String(s);
+      b.style.cssText =
+        "height:20px;min-width:20px;padding:0 6px;border:1px solid #cfcfcf;border-radius:2px;" +
+        "background:#fff;cursor:pointer;font-size:11px;line-height:18px;";
+      b.addEventListener('click', ()=>{ step = s; update(); });
+      stepGrid.appendChild(b);
+    });
+
+    // right column: 73..78 + 81..120 step 3 (come screenshot)
+    stepCol.innerHTML = "";
+    longSteps.forEach(s=>{
+      const a = document.createElement('a');
+      a.href = "javascript:void(0)";
+      a.dataset.step = String(s);
+      a.textContent = String(s);
+      a.style.cssText =
+        "display:block;text-align:center;text-decoration:none;color:#333;" +
+        "border:1px solid #e5e5e5;border-radius:2px;padding:4px 0;font-size:11px;background:#fff;";
+      a.addEventListener('click', ()=>{ step = s; update(); });
+      stepCol.appendChild(a);
+    });
+  }
+
+  // events
+  [modelSel, varSel, domSel, runSel].forEach(el => el.addEventListener('change', update));
+  prevBtn.addEventListener('click', ()=>stepByIndex(-1));
+  nextBtn.addEventListener('click', ()=>stepByIndex(1));
+  playBtn.addEventListener('click', togglePlay);
+
+  // init
+  buildUI();
+  step = allSteps[0];
+  update();
+})();
+</script>
