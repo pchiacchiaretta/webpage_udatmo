@@ -1,0 +1,77 @@
+<div class="campus-webcam-wrapper">
+  <div class="campus-webcam-header">
+    <div class="campus-webcam-title">Chieti Scalo - Campus Universitario</div>
+  </div>
+
+  <div class="campus-webcam-image">
+    <img
+      id="campus-webcam-img"
+      src="/sites/st02/files/campus_uda_chieti.jpg"
+      alt="Webcam Campus Universitario G. d'Annunzio Chieti - Pescara"
+    />
+  </div>
+
+  <div class="campus-webcam-description">
+    Immagine proveniente dall'interno del Campus dell'Università
+    <strong>&quot;G. d'Annunzio&quot; di Chieti - Pescara</strong>.
+    L'inquadratura è orientata verso <strong>Sud</strong>:
+    è possibile scorgere <strong>Chieti</strong> sulla sinistra
+    e la <strong>Majella</strong> sulla destra.
+  </div>
+
+  <div class="campus-webcam-footer">
+    Le immagini e le informazioni meteo in esse contenute sono di proprietà
+    del <strong>Laboratorio di Fisica-Chimica dell'Atmosfera e Climatologia (DTim&amp;O)</strong>
+    Università degli Studi <strong>&quot;G. D'Annunzio&quot; Chieti - Pescara</strong>.
+    È vietato l'uso e la diffusione senza l'espresso consenso e si declina ogni
+    responsabilità per il loro uso improprio.
+  </div>
+</div>
+
+<style>
+.campus-webcam-wrapper {
+  max-width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Titolo */
+.campus-webcam-header {
+  padding: 6px 0 8px;
+}
+
+.campus-webcam-title {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+/* Immagine */
+.campus-webcam-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Descrizione */
+.campus-webcam-description {
+  padding: 8px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* Footer legale */
+.campus-webcam-footer {
+  padding-top: 6px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #666;
+}
+</style>
+
+<script>
+(function () {
+  // forza il refresh dell'immagine (anti-cache browser)
+  var img = document.getElementById('campus-webcam-img');
+  img.src = img.src + '?v=' + Date.now();
+})();
+</script>

@@ -1,0 +1,258 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<style>
+  #meteo-map { width:100%; height:520px; border-radius:10px; overflow:hidden; }
+
+  .badge-temp{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:8px;
+    font:700 16px/1 Arial,sans-serif;
+    color:#000;
+    box-shadow:0 2px 8px rgba(0,0,0,.35);
+    border:1px solid rgba(255,255,255,.35);
+    background:#b7ff3c;
+  }
+  .badge-temp.hot{ background:#ff2b2b; color:#fff; }
+  .badge-temp.na{ background:#999; color:#fff; }
+
+  #meteo-table { margin-top:14px; width:100%; border-collapse:collapse; font:14px Arial; }
+  #meteo-table th, #meteo-table td { padding:10px; border-bottom:1px solid #e6e6e6; text-align:left; }
+  #meteo-table th { background:#f7f7f7; font-weight:700; }
+  .muted{ color:#999; }
+</style>
+
+<div id="meteo-map"></div>
+
+<table id="meteo-table">
+  <thead>
+    <tr>
+      <th>Stazione</th>
+      <th>Località</th>
+      <th>Temp °C</th>
+      <th>UR %</th>
+      <th>Pres hPa</th>
+      <th>Vento km/h</th>
+      <th>Dir</th>
+      <th>R pioggia (giorno) mm</th>
+      <th>Agg. (sec)</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+(function(){
+
+  // ✅ URL DEL FILE (MEGLIO ASSOLUTO)
+  var DATA_URL = "https://st02-unich-d7cl4.pp.cineca.it/sites/st02/files/export_0.txt";
+  // Se vuoi relativo:
+  // var DATA_URL = "/sites/st02/files/export_0.txt";
+
+  // Mappa
+  var map = L.map('meteo-map').setView([42.39, 14.16], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  function badgeClass(temp){
+    if (temp === null || isNaN(temp)) return "badge-temp na";
+    return (temp >= 22) ? "badge-temp hot" : "badge-temp";
+  }
+  function nOrNull(v){
+    if (v === undefined || v === null) return null;
+    var s = String(v).trim();
+    if (s === "") return null;
+    var n = Number(s);
+    return Number.isFinite(n) ? n : null;
+  }
+  function txt(v){
+    if (v === undefined || v === null) return "";
+    return String(v).trim();
+  }
+  function isNumericString(v){
+    return /^[0-9]+$/.test(String(v).trim());
+  }
+
+  // ✅ Parser: supporta nuovo formato + legacy senza creare righe sbagliate
+  function parseExport(text){
+    var lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+    var rows = [];
+    var header = null;
+
+    function parseNew(cols){
+      // header nuovo: name,site,lat,lon,tempout_c,humout,bar_hpa,wind_kmh,winddir_txt,gust_kmh,rain_day_mm,updated_age_sec
+      var m = {};
+      header.forEach((h,i) => m[h] = (cols[i] !== undefined ? cols[i] : ""));
+
+      return {
+        code: txt(m.name),
+        site: txt(m.site),
+        lat: nOrNull(m.lat),
+        lon: nOrNull(m.lon),
+        temp: nOrNull(m.tempout_c),
+        hum: nOrNull(m.humout),
+        pres: nOrNull(m.bar_hpa),
+        wind: nOrNull(m.wind_kmh),
+        winddir: txt(m.winddir_txt),
+        gust: nOrNull(m.gust_kmh),
+        rain_day: nOrNull(m.rain_day_mm),
+        age_sec: nOrNull(m.updated_age_sec),
+        __src: "new"
+      };
+    }
+
+    function parseLegacy(cols){
+      // legacy: id,code,site,lat,lon,ts,flag,temp,hum,pres,wind,winddir_deg,gust,rain_day,...,winddir_txt,...
+      return {
+        code: txt(cols[1]),
+        site: txt(cols[2]),
+        lat: nOrNull(cols[3]),
+        lon: nOrNull(cols[4]),
+        temp: nOrNull(cols[7]),
+        hum: nOrNull(cols[8]),
+        pres: nOrNull(cols[9]),
+        wind: nOrNull(cols[10]),
+        gust: nOrNull(cols[12]),
+        rain_day: nOrNull(cols[13]),
+        winddir: txt(cols[17]),
+        age_sec: null,
+        __src: "legacy"
+      };
+    }
+
+    for (var i=0; i<lines.length; i++){
+      var cols = lines[i].split(',');
+
+      // trova header nuovo
+      if (!header && cols[0] === "name" && cols.includes("lat") && cols.includes("lon")) {
+        header = cols.map(c => c.trim());
+        continue;
+      }
+
+      if (cols.length < 4) continue;
+
+      var row = null;
+
+      if (header) {
+        // ✅ Formato nuovo SOLO se numero colonne = header (12) e NON inizia con numero
+        if (cols.length === header.length && !isNumericString(cols[0])) {
+          row = parseNew(cols);
+        }
+        // ✅ Legacy se riga lunga e inizia con ID numerico
+        else if (cols.length > header.length && isNumericString(cols[0])) {
+          row = parseLegacy(cols);
+        } else {
+          row = null; // scarta righe strane
+        }
+      } else {
+        // fallback: se non trovi header, prova legacy
+        if (isNumericString(cols[0]) && cols.length > 10) row = parseLegacy(cols);
+      }
+
+      if (row && row.code && typeof row.lat === "number" && typeof row.lon === "number") {
+        rows.push(row);
+      }
+    }
+
+    // ✅ Dedup: 1 riga per stazione
+    // preferisci "new" rispetto a legacy, e preferisci quella con più campi valorizzati
+    var best = {};
+    rows.forEach(function(r){
+      var score = 0;
+      ["temp","hum","pres","wind","gust","rain_day","age_sec"].forEach(function(k){
+        if (typeof r[k] === "number") score++;
+      });
+
+      var bonus = (r.__src === "new") ? 100 : 0;
+      var total = bonus + score;
+
+      if (!best[r.code] || total > best[r.code].__total){
+        r.__total = total;
+        best[r.code] = r;
+      }
+    });
+
+    var out = Object.keys(best).map(function(k){
+      delete best[k].__total;
+      delete best[k].__src;
+      return best[k];
+    });
+
+    // ✅ SOLO SGT e UdA (come vuoi tu)
+    out = out.filter(s => (s.code === "SGT" || s.code === "UdA"));
+
+    // ordine fisso: SGT prima, UdA dopo
+    out.sort((a,b) => {
+      var order = {"SGT": 1, "UdA": 2};
+      return (order[a.code]||99) - (order[b.code]||99);
+    });
+
+    return out;
+  }
+
+  function renderTable(stations){
+    var tbody = document.querySelector('#meteo-table tbody');
+    tbody.innerHTML = "";
+
+    stations.forEach(function(s){
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        "<td><b>"+ (s.code || "--") +"</b></td>" +
+        "<td>"+ (s.site || "--") +"</td>" +
+        "<td>"+ (s.temp===null ? '<span class="muted">--</span>' : s.temp.toFixed(1)) +"</td>" +
+        "<td>"+ (s.hum===null ? '<span class="muted">--</span>' : s.hum) +"</td>" +
+        "<td>"+ (s.pres===null ? '<span class="muted">--</span>' : s.pres.toFixed(1)) +"</td>" +
+        "<td>"+ (s.wind===null ? '<span class="muted">--</span>' : s.wind.toFixed(1)) +"</td>" +
+        "<td>"+ (s.winddir ? s.winddir : '<span class="muted">--</span>') +"</td>" +
+        "<td>"+ (s.rain_day===null ? '<span class="muted">--</span>' : s.rain_day.toFixed(1)) +"</td>" +
+        "<td>"+ (s.age_sec===null ? '<span class="muted">--</span>' : Math.round(s.age_sec)) +"</td>";
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderMap(stations){
+    var bounds = [];
+    stations.forEach(function(s){
+
+      var icon = L.divIcon({
+        className: "",
+        html: '<span class="'+badgeClass(s.temp)+'">'+ (s.temp===null?'--':s.temp.toFixed(1)) +'</span>',
+        iconSize: [0,0]
+      });
+
+      L.marker([s.lat, s.lon], {icon: icon})
+        .addTo(map)
+        .bindPopup(
+          "<b>"+(s.code||'')+"</b><br>" +
+          (s.site||'') + "<br>" +
+          "Temp: " + (s.temp===null?'--':s.temp.toFixed(1)) + " °C<br>" +
+          "UR: " + (s.hum===null?'--':s.hum) + " %<br>" +
+          "Pres: " + (s.pres===null?'--':s.pres.toFixed(1)) + " hPa<br>" +
+          "Vento: " + (s.wind===null?'--':s.wind.toFixed(1)) + " km/h " + (s.winddir||"") + "<br>" +
+          "R pioggia (giorno): " + (s.rain_day===null?'--':s.rain_day.toFixed(1)) + " mm"
+        );
+
+      bounds.push([s.lat, s.lon]);
+    });
+
+    if (bounds.length) map.fitBounds(bounds, {padding:[20,20]});
+  }
+
+  fetch(DATA_URL, { cache: "no-store" })
+    .then(r => r.text())
+    .then(text => {
+      var stations = parseExport(text);
+      renderTable(stations);
+      renderMap(stations);
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Errore nel caricamento/parsing di export.txt. Controlla URL e che Drupal non blocchi gli script.");
+    });
+
+})();
+</script>
