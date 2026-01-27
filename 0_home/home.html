@@ -1,0 +1,441 @@
+```html
+<style>
+/* ===== Ud'Atmo – Sezioni statiche (Drupal 7 safe) ===== */
+.udatmo-wrap{
+  max-width: 1120px;
+  margin: 30px auto;
+  padding: 0 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #1f2a38;
+}
+.udatmo-wrap *{ box-sizing: border-box; }
+
+.udatmo-section{
+  background: #e9edf2;
+  border-radius: 16px;
+  padding: 22px;
+  margin: 18px 0;
+}
+
+.udatmo-card{
+  background:#fff;
+  border-radius: 4px;
+  padding: 26px 26px 18px;
+  box-shadow: 0 2px 0 rgba(0,0,0,.05);
+}
+
+.udatmo-title{
+  margin: 0 0 10px;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: .2px;
+  text-transform: uppercase;
+}
+
+.udatmo-lead{
+  margin: 0 0 18px;
+  color: #6a7685;
+  line-height: 1.55;
+  font-size: 13px;
+}
+
+/* 3 colonne */
+.udatmo-cols{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding-top: 8px;
+}
+
+.udatmo-col{
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.udatmo-ico{
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+}
+
+/* Testi colonne */
+.udatmo-col h3{
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #2b3d57;
+}
+.udatmo-col p{
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color:#6a7685;
+}
+
+/* titolo “mini” sopra ogni sezione (opzionale) */
+.udatmo-kicker{
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .35px;
+  text-transform: uppercase;
+  color: #2f4c79;
+  margin: 0 0 12px;
+}
+
+/* responsive */
+@media (max-width: 980px){
+  .udatmo-cols{ grid-template-columns: 1fr; }
+}
+
+/* =========================
+   ICONE PURE CSS (NO SVG/IMG)
+   ========================= */
+.ud-ico{
+  width:44px;
+  height:44px;
+  position:relative;
+  display:inline-block;
+  color:#2f4c79;
+}
+
+/* PIN */
+.ud-ico.pin{
+  background:currentColor;
+  border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);
+}
+.ud-ico.pin::after{
+  content:"";
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:#fff;
+  border-radius:50%;
+  top:15px;
+  left:15px;
+}
+
+/* AEREO (semplice) */
+.ud-ico.plane::before,
+.ud-ico.plane::after{
+  content:"";
+  position:absolute;
+  background:currentColor;
+}
+.ud-ico.plane::before{
+  width:44px;
+  height:6px;
+  top:19px;
+  left:0;
+}
+.ud-ico.plane::after{
+  width:6px;
+  height:44px;
+  top:0;
+  left:19px;
+}
+
+/* GOCCIA */
+.ud-ico.drop{
+  background:currentColor;
+  border-radius:50% 50% 60% 60%;
+  clip-path:polygon(50% 0,80% 30%,100% 60%,50% 100%,0 60%,20% 30%);
+}
+
+/* NUVOLA */
+.ud-ico.cloud{
+  background:currentColor;
+  border-radius:20px;
+}
+.ud-ico.cloud::before,
+.ud-ico.cloud::after{
+  content:"";
+  position:absolute;
+  background:currentColor;
+  border-radius:50%;
+}
+.ud-ico.cloud::before{
+  width:20px;
+  height:20px;
+  top:-10px;
+  left:6px;
+}
+.ud-ico.cloud::after{
+  width:26px;
+  height:26px;
+  top:-14px;
+  right:6px;
+}
+
+/* FRECCE ORIZZONTALI */
+.ud-ico.arrows::before,
+.ud-ico.arrows::after{
+  content:"";
+  position:absolute;
+  width:30px;
+  height:4px;
+  background:currentColor;
+  top:20px;
+}
+.ud-ico.arrows::before{ left:0; }
+.ud-ico.arrows::after{ right:0; }
+
+/* FRECCIA SU */
+.ud-ico.up::before{
+  content:"";
+  position:absolute;
+  width:0;
+  height:0;
+  border-left:10px solid transparent;
+  border-right:10px solid transparent;
+  border-bottom:18px solid currentColor;
+  top:4px;
+  left:12px;
+}
+.ud-ico.up::after{
+  content:"";
+  position:absolute;
+  width:6px;
+  height:18px;
+  background:currentColor;
+  top:20px;
+  left:19px;
+}
+
+/* BAR CHART */
+.ud-ico.chart{
+  display:flex;
+  align-items:flex-end;
+  gap:4px;
+}
+.ud-ico.chart span{
+  width:8px;
+  background:currentColor;
+  display:block;
+}
+.ud-ico.chart span:nth-child(1){height:18px;}
+.ud-ico.chart span:nth-child(2){height:26px;}
+.ud-ico.chart span:nth-child(3){height:34px;}
+
+/* GRID */
+.ud-ico.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  grid-template-rows:repeat(2,1fr);
+  gap:4px;
+}
+.ud-ico.grid span{
+  background:currentColor;
+  display:block;
+}
+
+/* CUORE */
+.ud-ico.heart::before,
+.ud-ico.heart::after{
+  content:"";
+  position:absolute;
+  width:22px;
+  height:34px;
+  background:currentColor;
+  border-radius:22px 22px 0 0;
+  top:6px;
+}
+.ud-ico.heart::before{
+  left:8px;
+  transform:rotate(-45deg);
+}
+.ud-ico.heart::after{
+  right:8px;
+  transform:rotate(45deg);
+}
+</style>
+
+<div class="udatmo-wrap">
+
+  <!-- SEZIONE 1 -->
+  <div class="udatmo-section">
+    <div class="udatmo-card">
+      <div class="udatmo-kicker">Fisica e chimica dell’atmosfera</div>
+      <h2 class="udatmo-title">Studiamo la fisica e la chimica dell’atmosfera</h2>
+      <p class="udatmo-lead">
+        Le osservazioni sia a terra che su piattaforme aviotrasportate vengono integrate da analisi modellistiche
+        per comprendere le variazioni della composizione chimica e delle proprietà fisiche dell’atmosfera.
+      </p>
+
+      <div class="udatmo-cols">
+
+        <div class="udatmo-col">
+          <div class="udatmo-ico">
+            <span class="ud-ico pin"></span>
+          </div>
+          <div>
+            <h3>A Terra</h3>
+            <p>Misure di composizione atmosferica e parametri meteorologici vengono effettuate in maniera continuativa in siti di particolare interesse.</p>
+          </div>
+        </div>
+
+        <div class="udatmo-col">
+          <div class="udatmo-ico">
+            <span class="ud-ico plane"></span>
+          </div>
+          <div>
+            <h3>Con Aerei e Droni</h3>
+            <p>Strumenti di misura innovativi vengono sviluppati e utilizzati per osservare l’atmosfera a bordo di aerei e droni strumentati.</p>
+          </div>
+        </div>
+
+        <div class="udatmo-col">
+          <div class="udatmo-ico">
+            <span class="ud-ico drop"></span>
+          </div>
+          <div>
+            <h3>In Mare</h3>
+            <p>Osservazioni in mare vengono effettuate per studiare il ruolo su clima e composizione atmosferica degli scambi atmosfera-superficie marina.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE 2 -->
+  <div class="udatmo-section">
+    <div class="udatmo-card">
+      <div class="udatmo-kicker">Flussi atmosfera-biosfera</div>
+      <h2 class="udatmo-title">Analizziamo gli scambi atmosfera-suolo, oceano</h2>
+      <p class="udatmo-lead">
+        Presso il Laboratorio di Fisica e Chimica dell’Atmosfera e Climatologia dell’Università “G. d’Annunzio”
+        si effettuano misure di flussi per valutare gli scambi tra terra e aria di composti chimici.
+      </p>
+
+      <div class="udatmo-cols">
+
+        <div class="udatmo-col">
+          <div class="udatmo-ico">
+            <span class="ud-ico cloud"></span>
+          </div>
+          <div>
+            <h3>In Atmosfera</h3>
+            <p>Sviluppo di strumenti e campagne di misura utili al rilevamento di emissioni antropiche e biogeniche.</p>
+          </div>
+        </div>
+
+        <div class="udatmo-col">
+          <div class="udatmo-ico">
+            <span class="ud-ico arrows"></span>
+          </div>
+          <div>
+            <h3>Dal Suolo</h3>
+            <p>Applicazioni geochimiche. Ricerca di possibili variazioni tra flussi di CO₂ e attività sismica lungo faglie attive.</p>
+          </div>
+        </div>
+
+        <div class="udatmo-col">
+          <div class="udatmo-ico">
+            <span class="ud-ico up"></span>
+          </div>
+          <div>
+            <h3>Dal Mare</h3>
+            <p>Osservatorio per il rilevamento di parametri chimico-fisici in ambiente marino e scambi mare-atmosfera.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE 3 -->
+  <div class="udatmo-section">
+    <div class="udatmo-card">
+      <div class="udatmo-kicker">Modellistica</div>
+      <h2 class="udatmo-title">Sviluppiamo modelli per diversi campi d’applicazione</h2>
+      <p class="udatmo-lead">
+        Il gruppo completa le proprie analisi osservative con l’impiego di modelli di diversa natura.
+      </p>
+
+      <div class="udatmo-cols">
+
+        <div class="udatmo-col">
+          <div class="udatmo-ico">
+            <span class="ud-ico chart"><span></span><span></span><span></span></span>
+          </div>
+          <div>
+            <h3>Regressivi</h3>
+            <p>Utili per effettuare previsioni e modellare relazioni di dipendenza.</p>
+          </div>
+        </div>
+
+        <div class="udatmo-col">
+          <div class="udatmo-ico">
+            <span class="ud-ico plane"></span>
+          </div>
+          <div>
+            <h3>Neurali</h3>
+            <p>Valutano relazioni complesse tra parametri chimici e non.</p>
+          </div>
+        </div>
+
+        <div class="udatmo-col">
+          <div class="udatmo-ico">
+            <span class="ud-ico grid"><span></span><span></span><span></span><span></span></span>
+          </div>
+          <div>
+            <h3>Box-Models</h3>
+            <p>Modellano la chimica in atto in uno specifico sito e i processi dominanti.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE 4 -->
+  <div class="udatmo-section">
+    <div class="udatmo-card">
+      <div class="udatmo-kicker">Inquinanti e salute</div>
+      <h2 class="udatmo-title">Indaghiamo su interazioni tra inquinanti e salute</h2>
+      <p class="udatmo-lead">
+        Studio dell’interazione tra composti atmosferici e salute umana tramite approcci interdisciplinari.
+      </p>
+
+      <div class="udatmo-cols">
+
+        <div class="udatmo-col">
+          <div class="udatmo-ico">
+            <span class="ud-ico grid"><span></span><span></span><span></span><span></span></span>
+          </div>
+          <div>
+            <h3>Inquinanti</h3>
+            <p>Studio di composti come l’ozono e altri ossidanti troposferici.</p>
+          </div>
+        </div>
+
+        <div class="udatmo-col">
+          <div class="udatmo-ico">
+            <span class="ud-ico arrows"></span>
+          </div>
+          <div>
+            <h3>Interazioni</h3>
+            <p>Impatto sull’ambiente e sulla salute degli esseri viventi.</p>
+          </div>
+        </div>
+
+        <div class="udatmo-col">
+          <div class="udatmo-ico">
+            <span class="ud-ico heart"></span>
+          </div>
+          <div>
+            <h3>Salute</h3>
+            <p>Effetti su cellule umane e valutazioni sperimentali in vitro.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+```
